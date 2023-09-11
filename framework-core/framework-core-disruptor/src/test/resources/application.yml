@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME:}
+
+logging:
+  config: classpath:logback-spring.xml
+
+disruptor:
+  debug: true

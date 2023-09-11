@@ -1,0 +1,39 @@
+<configuration>
+
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+    <appender name="http" class="tech.finovy.framework.logappender.LogHttpAppender">
+
+        <endpoint>https://log.finovy.tech/</endpoint>
+        <accessKeyId>accessKeyId-0001</accessKeyId>
+        <accessKeySecret>accessKeySecret-0002</accessKeySecret>
+        <project>LOCAL-DEV</project>
+        <logStore>test-store</logStore>
+        <topic>topic-----2</topic>
+        <totalSizeInBytes>104857600</totalSizeInBytes>
+        <maxBlockMs>0</maxBlockMs>
+        <ioThreadCount>8</ioThreadCount>
+        <batchSizeThresholdInBytes>524288</batchSizeThresholdInBytes>
+        <batchCountThreshold>4096</batchCountThreshold>
+        <lingerMs>2000</lingerMs>
+        <retries>10</retries>
+        <baseRetryBackoffMs>100</baseRetryBackoffMs>
+        <maxRetryBackoffMs>50000</maxRetryBackoffMs>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg</pattern>
+        </encoder>
+        <mdcFields>THREAD_ID,MDC_KEY,appid,traceid</mdcFields>
+    </appender>
+    <logger name="org.apache.http.impl.conn.Wire" level="WARN"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <root>
+        <level value="info"/>
+        <appender-ref ref="http"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
