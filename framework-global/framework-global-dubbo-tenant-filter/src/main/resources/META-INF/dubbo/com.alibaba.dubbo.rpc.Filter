@@ -1,0 +1,2 @@
+dubboConsumerContextFilter=dubbo.filter.tech.finovy.framework.global.DubboConsumerContextFilter
+dubboProviderContextFilter=dubbo.filter.tech.finovy.framework.global.DubboProviderContextFilter

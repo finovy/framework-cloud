@@ -3,9 +3,6 @@ package tech.finovy.framework.logappender.push.internals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author dtype.huang
- */
 public class LogThread extends Thread {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());

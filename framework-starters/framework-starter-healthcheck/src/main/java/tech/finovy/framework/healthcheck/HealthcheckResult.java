@@ -2,9 +2,6 @@ package tech.finovy.framework.healthcheck;
 
 import lombok.Data;
 
-/**
- * @author dtype.huang
- */
 @Data
 public class HealthcheckResult {
 

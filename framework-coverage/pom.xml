@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>tech.finovy</groupId>
+        <artifactId>framework-cloud</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>framework-coverage</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-common-compress</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-common-util</artifactId>
+        </dependency>
+        <!--component-->
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-datasource-dynamic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-disruptor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-elasticsearch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-event</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-http</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-local-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-ratelimter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-rocketmq</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>report-aggregate</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/../target/site/jacoco</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
+

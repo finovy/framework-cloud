@@ -1,8 +1,5 @@
 package tech.finovy.framework.logappender.exception;
 
-/**
- * @author dtype.huang
- */
 public final class ErrorCodes {
 
     public static final String BAD_RESPONSE = "BadResponse";

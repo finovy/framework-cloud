@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>tech.finovy</groupId>
+        <artifactId>framework-component</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>framework-comonent-scheduler-client</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-scheduler-entity</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-listener</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-redis</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+    </dependencies>
+</project>

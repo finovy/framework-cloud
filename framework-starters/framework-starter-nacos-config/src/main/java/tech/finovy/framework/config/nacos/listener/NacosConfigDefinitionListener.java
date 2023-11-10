@@ -1,10 +1,8 @@
 package tech.finovy.framework.config.nacos.listener;
 
-import tech.finovy.framework.core.common.chain.ChainListener;
 
-/**
- * @author dtype
- */
+import tech.finovy.framework.common.core.chain.ChainListener;
+
 public interface NacosConfigDefinitionListener<T> extends ChainListener {
     String getDataId();
 

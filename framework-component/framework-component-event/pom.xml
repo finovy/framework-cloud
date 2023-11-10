@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>tech.finovy</groupId>
+        <artifactId>framework-component</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>framework-component-event</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-distributed-event-api</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-common-compress</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-component-disruptor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-starter-rocketmq-producer</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
+        <!--test-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

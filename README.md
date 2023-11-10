@@ -30,44 +30,7 @@ This project does not involve the development of business code, but rather provi
 - Disruptor 3.4.4
 - Nacos 2.2.2
 
-### Project Structure
 
-```tex
-framework-cloud
-├─framework-core                                 : Core Code Layer
-│  ├─framework-core-commons                      : Common Dependencies
-│  ├─framework-core-disruptor                    : Disruptor Extension
-│  ├─framework-core-http                         : HTTP Extension
-│  ├─framework-local-cache                       : Local Cache
-│  ├─framework-core-redis                        : Redis Extension
-│  ├─framework-core-rocketmq                     : RocketMQ Extension
-├─framework-starters                             : Starter Layer
-│  ├─framework-starter-nacos-entity              : Nacos POJO
-│  ├─framework-starter-nacos-config              : Nacos Configuration
-│  ├─framework-starter-nacos-discovery           : Nacos Registry Center
-│  ├─framework-starter-healthcheck               : Health Check
-│  ├─framework-starter-http-logappender          : RocketMQ Extension
-├─framework-dependencies                         : Dependency Management
-```
 
-### Quick Start
 
-1. Introduce the version management dependency of framework-cloud
-
-   ```yaml
-   <dependency>
-       <groupId>tech.finovy</groupId>
-       <artifactId>framework-dependencies</artifactId>
-       <version>0.1.0-SNAPSHOT</version>
-   </dependency>
-   ```
-
-2. Introduce other functional modules as needed, without specifying version numbers (because they are already defined in framework-dependencies)
-
-   ```yaml
-   <dependency>
-       <groupId>tech.finovy</groupId>
-       <artifactId>framework-core-commons</artifactId>
-   </dependency>
-   ```
 

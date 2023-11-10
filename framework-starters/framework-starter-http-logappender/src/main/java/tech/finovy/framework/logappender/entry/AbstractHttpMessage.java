@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-/**
- * @author dtype.huang
- */
 public abstract class AbstractHttpMessage {
     private Map<String, String> headers = new CaseInsensitiveMap<>();
     private InputStream content;

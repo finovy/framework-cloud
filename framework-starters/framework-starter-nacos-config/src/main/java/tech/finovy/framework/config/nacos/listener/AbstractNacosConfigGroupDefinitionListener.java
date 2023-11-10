@@ -7,17 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.yaml.snakeyaml.Yaml;
-import tech.finovy.framework.config.nacos.entity.AbstractNacosConfigEntity;
-import tech.finovy.framework.config.nacos.entity.AbstractNacosConfigGroup;
+import tech.finovy.framework.nacos.entity.AbstractNacosConfigEntity;
+import tech.finovy.framework.nacos.entity.AbstractNacosConfigGroup;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Collections.synchronizedMap;
 
-/**
- * @author dtype
- */
 @Slf4j
 public abstract class AbstractNacosConfigGroupDefinitionListener<T extends AbstractNacosConfigGroup, E extends AbstractNacosConfigEntity> implements NacosConfigDefinitionListener<T> {
     protected final AtomicInteger loadNacos = new AtomicInteger();
@@ -28,7 +25,7 @@ public abstract class AbstractNacosConfigGroupDefinitionListener<T extends Abstr
     protected String dataGroup;
     protected String namespace;
     protected String index;
-    protected T confgiGroup;
+    protected T configGroup;
 
     public AbstractNacosConfigGroupDefinitionListener(Class<T> groupType, Class<E> entityType, E defaultEntity) {
         this.groupType = groupType;
@@ -120,10 +117,10 @@ public abstract class AbstractNacosConfigGroupDefinitionListener<T extends Abstr
     @Override
     public void refresh(String dataId, String dataGroup, T config, int version) {
         BeanUtils.copyProperties(config, NACOS_DEFINITION_REPOSITORY_ITEM_ENTITY);
-        if (confgiGroup == null) {
-            confgiGroup = config;
+        if (configGroup == null) {
+            configGroup = config;
         } else {
-            BeanUtils.copyProperties(config, confgiGroup);
+            BeanUtils.copyProperties(config, configGroup);
         }
         NACOS_DEFINITION_REPOSITORY_ITEM_ENTITY.setExists(false);
         List<E> hostList = config.getEntity();
@@ -210,8 +207,8 @@ public abstract class AbstractNacosConfigGroupDefinitionListener<T extends Abstr
         return entity;
     }
 
-    public T getConfgiGroup() {
-        return confgiGroup;
+    public T getConfigGroup() {
+        return configGroup;
     }
 
     public E getDefaultEntity() {

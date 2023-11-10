@@ -77,7 +77,7 @@ public class DefaultServiceClient extends AbstractServiceClient {
         this.requestConfig = requestConfigBuilder.build();
     }
 
-    protected static ResponseMessage buildResponse(AbstractServiceClient.Request request, CloseableHttpResponse httpResponse) throws IOException {
+    protected static ResponseMessage buildResponse(Request request, CloseableHttpResponse httpResponse) throws IOException {
         assert (httpResponse != null);
         ResponseMessage response = new ResponseMessage();
         response.setUrl(request.getUri());
@@ -108,7 +108,7 @@ public class DefaultServiceClient extends AbstractServiceClient {
     }
 
     @Override
-    public ResponseMessage sendRequestCore(AbstractServiceClient.Request request, String charset) throws IOException {
+    public ResponseMessage sendRequestCore(Request request, String charset) throws IOException {
         HttpRequestBase httpRequest = httpRequestFactory.createHttpRequest(request, charset);
         setProxyAuthorizationIfNeed(httpRequest);
         HttpClientContext httpContext = createHttpContext();

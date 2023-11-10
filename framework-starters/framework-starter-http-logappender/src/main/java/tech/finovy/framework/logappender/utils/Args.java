@@ -2,9 +2,6 @@ package tech.finovy.framework.logappender.utils;
 
 import java.util.Collection;
 
-/**
- * @author dtype.huang
- */
 public final class Args {
     private Args() {
     }

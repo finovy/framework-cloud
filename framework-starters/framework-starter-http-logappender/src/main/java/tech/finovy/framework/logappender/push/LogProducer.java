@@ -26,9 +26,6 @@ import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * @author dtype.huang
- */
 public class LogProducer implements Producer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LogProducer.class);

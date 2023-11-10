@@ -16,9 +16,6 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * @author dtype.huang
- */
 public class SendProducerBatchTask implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SendProducerBatchTask.class);

@@ -1,0 +1,27 @@
+logging:
+  config: classpath:logback-spring.xml
+
+spring:
+  application:
+    name: framework-log-store-test
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    import:
+      - optional:nacos:${APPLICATION_NAME:framework-log-store-test}.yaml
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_USERNAME:CQdFj0YF044DlVGThik27q}
+      config:
+        server-addr: ${NACOS_CONFIG_SERVER_ADDR:10.7.0.27:8848}
+        namespace: ${NACOS_CONFIG_NAMESPACE:dev-java-namespace}
+        group-id: ${NACOS_CONFIG_GROUPID:DEFAULT_GROUP}
+        file-extension: yaml
+        maxRetry: 10
+      discovery:
+        server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:10.7.0.27:8848}
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:dev-java-namespace}
+        group-id: ${NACOS_DISCOVERY_GROUPID:DEFAULT_GROUP}
+        enabled: true
+        register-enabled: true
