@@ -9,12 +9,21 @@ public class TenantContext {
 
     private static final TransmittableThreadLocal<String> currentTenant = new TransmittableThreadLocal<>();
     private static final TransmittableThreadLocal<String> currentTraceId = new TransmittableThreadLocal<>();
+    private static final TransmittableThreadLocal<Boolean> ignoreTenant = new TransmittableThreadLocal<>(false);
 
     public static void setCurrentTenant(String appid) {
         if (appid == null) {
             return;
         }
         currentTenant.set(appid);
+    }
+
+    public static void setIgnoreTenant(boolean ignore) {
+        ignoreTenant.set(ignore);
+    }
+
+    public static boolean isIgnoreTenant() {
+        return ignoreTenant.get();
     }
 
     public static void setCurrentTraceId(String traceId) {
@@ -35,5 +44,6 @@ public class TenantContext {
     public static void clear() {
         currentTenant.remove();
         currentTraceId.remove();
+        ignoreTenant.remove();
     }
 }

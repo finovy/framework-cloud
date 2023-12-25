@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author PC
+ */
 @Data
 public class PrepareDict implements Serializable {
     private static final long serialVersionUID = 6181406230795341735L;

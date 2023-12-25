@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false" scanPeriod="1 seconds">
+
+    <contextName>logback</contextName>
+   
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender"> 
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+              <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %line- %msg%n</pattern>
+        </encoder>
+    </appender>
+
+	
+	<logger name="tech.finovy" level="DEBUG" additivity="false">
+			<appender-ref ref="console" />			
+	</logger>
+
+	<root level="trace" additivity="false">
+		<appender-ref ref="console" />		
+	</root>
+
+</configuration>

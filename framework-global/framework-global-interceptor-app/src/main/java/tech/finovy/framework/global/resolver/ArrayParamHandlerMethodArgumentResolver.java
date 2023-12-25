@@ -58,8 +58,9 @@ public class ArrayParamHandlerMethodArgumentResolver extends AbstractCustomizeRe
     }
 
     /**
-     *  o ["a","b","c"]  或  a,b,c 格式
-     * 将字符串值格式化返回为数组
+     * @param o ["a","b","c"]  或  a,b,c 格式
+     * @Description: 将字符串值格式化返回为数组
+     * @return: java.lang.Object[]
      */
     private Object[] value2Array(Object o) {
         assert o != null;
@@ -73,7 +74,10 @@ public class ArrayParamHandlerMethodArgumentResolver extends AbstractCustomizeRe
     }
 
     /**
-     * 数组转集合
+     * @param propertyType
+     * @param array
+     * @Description: 数组转集合
+     * @return: java.util.Collection<java.lang.Object>
      */
     private Collection<Object> array2Collection(Class<?> propertyType, Object[] array) {
         Collection<Object> collection = CollectionFactory.createCollection(propertyType, array.length);

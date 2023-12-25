@@ -20,10 +20,10 @@ import java.util.Base64;
 
 @Slf4j
 public class SecurityUtil {
-    public static final String PASSWORD_KEY = "98NGR8ypf_akvRikFig";
+    public static final String PASSWORD_KEY = "IjMxUCMBH6OxJZ6q";
     public static final String PASSWORD_IV = "01234567";
-    public static final String KEY = "98NGR8ypf_akvRikFig";
-    public static final String IV = "MBS9N75V0KJ3BK";
+    public static final String KEY = "7sANGR8ypf_aQKkvRikFig";
+    public static final String IV = "IB9N75V82Q0KJ3BK";
     public static final String DEFAULT_ENC_NAME = "UTF-8";
     private static final String ALGORITHM_PKCS5PADDING = "AES/CBC/PKCS5Padding";
     private static final String ALGORITHM_NOPADDING = "AES/CBC/NoPadding";

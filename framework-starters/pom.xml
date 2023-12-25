@@ -39,6 +39,8 @@
         <module>framework-starter-sentinel</module>
         <module>framework-starter-scheduler-client</module>
         <module>framework-starter-springfox-adapter</module>
+        <module>framework-starter-transaction-client</module>
+        <module>framework-starter-skywalking</module>
     </modules>
 
     <dependencies>

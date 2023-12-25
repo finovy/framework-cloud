@@ -19,6 +19,12 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+/**
+ * The type String utils test.
+ *
+ * @author Otis.z
+ * @author Geng Zhang
+ */
 public class StringUtilsTest {
 
     /**

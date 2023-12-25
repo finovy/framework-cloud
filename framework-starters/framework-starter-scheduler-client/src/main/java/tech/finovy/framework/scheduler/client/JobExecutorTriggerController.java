@@ -35,7 +35,10 @@ public class JobExecutorTriggerController<T> {
         if (config == null) {
             return RemoteJobExecuteResult.builder().success(false).result("RemoteJobExecuteConfig IS NULL").build();
         }
-        final RLock lock = context.getClient().getLock("trigger-" + config.getJobKey() + "-" + config.getShardingItem() + "-" + config.getShardingTotalCount());
+        RLock lock = null;
+        if (!properties.isSkipDistributedLock()) {
+            lock = context.getClient().getLock("trigger-" + config.getJobKey() + "-" + config.getShardingItem() + "-" + config.getShardingTotalCount());
+        }
         if (lock == null || config.getRateLimiter() < 0.0) {
             return schedulerExecutorService.trigger(config);
         }

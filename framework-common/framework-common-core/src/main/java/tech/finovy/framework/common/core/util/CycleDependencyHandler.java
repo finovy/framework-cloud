@@ -19,6 +19,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
+/**
+ * The type CycleDependency handler.
+ *
+ * @author wang.liang
+ */
 public class CycleDependencyHandler {
 
     private static final ThreadLocal<Set<Object>> OBJECT_SET_LOCAL = new ThreadLocal<>();

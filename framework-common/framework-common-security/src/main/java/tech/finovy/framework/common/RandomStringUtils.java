@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * @author Morty.Wang
+ * @since 2023/2/27 14:04
+ **/
 public class RandomStringUtils {
 
     private static final List<Integer> VALID_PWD_CHARS = new ArrayList<>();

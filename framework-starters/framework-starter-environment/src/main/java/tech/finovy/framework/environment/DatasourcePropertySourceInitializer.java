@@ -4,6 +4,8 @@ import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
@@ -15,7 +17,8 @@ import java.io.Serial;
 import java.util.*;
 
 public class DatasourcePropertySourceInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
-    private static final Log logger = LogFactory.getLog(DatasourcePropertySourceInitializer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatasourcePropertySourceInitializer.class);
+
     protected static final Set<String> EN_KEY = new HashSet<>() {
         @Serial
         private static final long serialVersionUID = 8044060882721124682L;
@@ -45,7 +48,7 @@ public class DatasourcePropertySourceInitializer implements ApplicationContextIn
         String secret = (String) environment.getSystemEnvironment().getOrDefault("DCONF_SECRET", "");
         String iv = (String) environment.getSystemEnvironment().getOrDefault("DCONF_IV", "");
         if (StringUtils.isEmpty(secret) || StringUtils.isEmpty(iv)) {
-            logger.info("DCONF_SECRET/IV NOT EXIST");
+            LOGGER.info("DCONF_SECRET/IV NOT EXIST");
             return;
         }
         for (PropertySource<?> p : environment.getPropertySources()) {
@@ -53,8 +56,12 @@ public class DatasourcePropertySourceInitializer implements ApplicationContextIn
                 for (String enKey : EN_KEY) {
                     if (p.containsProperty(enKey)) {
                         Map<String, Object> property = (Map<String, Object>) p.getSource();
-                        property.put(enKey, SecurityEncryption.decrypt(String.valueOf(p.getProperty(enKey)), secret, iv));
-                        logger.info("DESCRIPTION " + enKey);
+                        try {
+                            property.put(enKey, SecurityEncryption.decrypt(String.valueOf(p.getProperty(enKey)), secret, iv));
+                            LOGGER.info("DESCRIPTION " + enKey);
+                        } catch (Exception e) {
+                            LOGGER.warn("Please pay attention! {} decrypt is error:{}, May your source is not encrypted.", enKey, e.getMessage());
+                        }
                     }
                 }
             }

@@ -19,6 +19,7 @@ public class R<T> implements Serializable {
     private boolean success;
     private T data;
     private String msg;
+    private String traceId;
 
     private R(IResultCode resultCode) {
         this(resultCode, null, resultCode.getMessage());

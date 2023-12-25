@@ -1,5 +1,6 @@
 package tech.finovy.framework.gloabl.interceptor;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
@@ -15,12 +16,18 @@ import org.springframework.util.StringUtils;
 import tech.finovy.framework.global.Constant;
 import tech.finovy.framework.global.TenantContext;
 import org.apache.dubbo.rpc.RpcContext;
+import tech.finovy.framework.global.TenantIgnoreAspect;
 
 
 @Slf4j
 @EnableTransactionManagement
 @Configuration(proxyBeanMethods = false)
 public class MybatisConfigAutoConfiguration {
+
+    @Bean
+    public TenantIgnoreAspect tenantIgnoreAspect(){
+        return new TenantIgnoreAspect();
+    }
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -43,7 +50,7 @@ public class MybatisConfigAutoConfiguration {
             // This is the default method, it returns false by default, indicating that all tables require multi-tenancy conditions to be applied.
             @Override
             public boolean ignoreTable(String tableName) {
-                return false;
+                return TenantContext.isIgnoreTenant();
             }
 
             @Override
@@ -53,7 +60,7 @@ public class MybatisConfigAutoConfiguration {
         }));
         // If you are using the pagination plugin, make sure to add the TenantLineInnerInterceptor first, and then add the PaginationInnerInterceptor.
         // When using the pagination plugin, it is essential to set MybatisConfiguration#useDeprecatedExecutor = false.
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
 }

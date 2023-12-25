@@ -15,17 +15,13 @@
     <properties>
         <revision>0.1.0-SNAPSHOT</revision>
         <java.version>18</java.version>
-        <cache-api.version>1.1.1</cache-api.version>
+        <sonar.skip>true</sonar.skip>
         <!--util-->
         <bcprov-jdk15on.version>1.70</bcprov-jdk15on.version>
         <bcprov-jdk16.version>1.46</bcprov-jdk16.version>
         <bcprov-ext-jdk15to18.version>1.75</bcprov-ext-jdk15to18.version>
         <hutool.version>5.7.22</hutool.version>
         <easyexcel.version>2.2.11</easyexcel.version>
-        <!--sonar-->
-        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
-        <!--plugin-->
-        <maven-plugin-build-helper.version>3.2.0</maven-plugin-build-helper.version>
         <!--common-->
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-io.vsersion>2.11.0</commons-io.vsersion>
@@ -37,31 +33,25 @@
         <aliyun-sdk-oss.version>3.12.0</aliyun-sdk-oss.version>
         <transmittable-thread-local.version>2.12.6</transmittable-thread-local.version>
         <perf4j.version>0.9.16</perf4j.version>
-        <mybatis.version>3.5.14</mybatis.version>
         <jjwt.version>0.9.0</jjwt.version>
         <curator.version>5.1.0</curator.version>
         <caffeine.version>3.1.5</caffeine.version>
+        <cache-api.version>1.1.1</cache-api.version>
         <canal.version>1.1.5</canal.version>
         <disruptor.version>3.4.4</disruptor.version>
         <dubbo.version>3.2.7</dubbo.version>
         <dubbo-dependencies.version>3.2.7</dubbo-dependencies.version>
-        <druid.version>1.2.11</druid.version>
-        <elasticsearch.version>7.15.0</elasticsearch.version>
-        <elasticsearch-client.version>7.15.0</elasticsearch-client.version>
-        <elasticsearch-high-level-client.version>7.15.0</elasticsearch-high-level-client.version>
+        <zookeeper.version>3.6.2</zookeeper.version>
         <elastic-job.version>3.0.3</elastic-job.version>
         <protobuf-java.version>3.11.0</protobuf-java.version>
-        <druid.version>1.2.16</druid.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
         <guava.version>32.1.2-jre</guava.version>
-        <hazelcast.version>5.3.1</hazelcast.version>
+        <hazelcast.version>5.3.6</hazelcast.version>
         <hazelcast-hibernate5.version>2.2.1</hazelcast-hibernate5.version>
         <hazelcast-kubernetes.version>2.2.3</hazelcast-kubernetes.version>
         <h2database.version>2.1.214</h2database.version>
         <sentinel.version>1.8.6</sentinel.version>
         <grpc.version>1.54.1</grpc.version>
-        <seata.version>1.8.0</seata.version>
         <annotation-api.version>1.3.2</annotation-api.version>
         <joda-time.version>2.9.9</joda-time.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
@@ -69,25 +59,47 @@
         <junit-vintage-engine.version>5.9.1</junit-vintage-engine.version>
         <lz4.version>1.3.0</lz4.version>
         <logback.version>1.4.6</logback.version>
-        <lombok.version>1.18.26</lombok.version>
-        <nacos.client.version>2.2.2</nacos.client.version>
+        <lombok.version>1.18.30</lombok.version>
         <netty.version>4.1.78.Final</netty.version>
         <rocketmq.version>5.0.0</rocketmq.version>
         <redisson.version>3.17.6</redisson.version>
         <servlet-api.version>3.1.0</servlet-api.version>
         <slf4j-api.version>2.0.7</slf4j-api.version>
-        <seata.version>1.6.1</seata.version>
-        <spring.cloud.version>2022.0.2</spring.cloud.version>
-        <spring-boot.version>3.0.0</spring-boot.version>
-        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
-        <spring.context.support.version>1.0.11</spring.context.support.version>
         <unirest.version>3.14.2</unirest.version>
+        <io.grpc.version>1.54.1</io.grpc.version>
+        <!--spring-->
+        <spring-boot.version>3.1.5</spring-boot.version>
+        <spring.cloud.version>2022.0.4</spring.cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
+        <!--seata-->
+        <seata.version>2.0.0</seata.version>
+        <!--nacos-->
+        <nacos.client.version>2.2.2</nacos.client.version>
+        <!--apm-->
+        <skywalking.version>9.1.0</skywalking.version>
+        <!--db-->
+        <mysql-connector.version>8.0.13</mysql-connector.version>
+        <mybatis-spring.version>3.0.3</mybatis-spring.version>
+        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
+        <mybatis.version>3.5.14</mybatis.version>
+        <druid.version>1.2.20</druid.version>
+        <elasticsearch.version>7.15.0</elasticsearch.version>
+        <elasticsearch-client.version>7.15.0</elasticsearch-client.version>
+        <elasticsearch-high-level-client.version>7.15.0</elasticsearch-high-level-client.version>
         <!--Swagger-->
-        <knife4j.version>3.0.3</knife4j.version>
+        <knife4j.version>4.3.0</knife4j.version>
         <swagger.version>1.6.12</swagger.version>
+        <swagger.v3.version>2.2.8</swagger.v3.version>
         <swagger-models.version>1.6.2</swagger-models.version>
         <springfox-swagger2.version>3.0.0</springfox-swagger2.version>
+        <!---->
+        <feishu-open-api.version>2.0.20</feishu-open-api.version>
+        <jasypt.version>3.0.5</jasypt.version>
+        <jenkins-client.version>0.3.8</jenkins-client.version>
         <!--Plugins-->
+        <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
+        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+        <maven-plugin-build-helper.version>3.2.0</maven-plugin-build-helper.version>
         <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
@@ -96,13 +108,6 @@
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-        <mybatis-spring.version>3.0.2</mybatis-spring.version>
-        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
-        <zookeeper.version>3.6.2</zookeeper.version>
-        <sonar.skip>true</sonar.skip>
-        <feishu-open-api.version>2.0.20</feishu-open-api.version>
-        <jasypt.version>3.0.5</jasypt.version>
-        <jenkins-client.version>0.3.8</jenkins-client.version>
     </properties>
 
     <dependencyManagement>
@@ -407,12 +412,22 @@
             </dependency>
             <dependency>
                 <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-interceptor-tenant</artifactId>
+                <artifactId>framework-starter-oidc-client</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-oidc-client</artifactId>
+                <artifactId>framework-starter-interceptor-app</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-interceptor-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-interceptor-tenant</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -450,7 +465,28 @@
                 <artifactId>framework-starter-springfox-adapter</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-transaction-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-skywalking</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!--Others       -->
+            <!--skywalking-->
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-trace</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
             <!--util-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -607,6 +643,11 @@
                 <version>${slf4j-api.version}</version>
             </dependency>
             <!--database-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
@@ -1045,8 +1086,13 @@
             <!--swagger-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
+                <version>${swagger.v3.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.swagger</groupId>

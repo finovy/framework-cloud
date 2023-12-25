@@ -5,6 +5,10 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Map;
 
+/**
+ * @date: 2021/6/23 19:17
+ * @author: tony
+ */
 @Data
 public class TraceLogEvent implements Serializable {
     private static final long serialVersionUID = -8113014397056682172L;
