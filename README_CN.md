@@ -820,6 +820,7 @@ spring:
 ```
 
 **前后端分离完整的对接流程**:
+
 ![oidc_example](/docs/image/oidc_way.png)
 
 **地址配置**:
