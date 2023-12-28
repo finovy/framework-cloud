@@ -810,6 +810,8 @@ spring:
           keycloak:
             # keycloak host，不填则使用默认值。
             host: http://10.21.1.17:30055
+            # keycloak realm，不填则使用默认值 master。
+            realm: user
             # (必需)id & secret (需要向keycloak管理员申请)
             client-id: test-keycloak
             client-secret: wzdMYmRewv4iXCS8D0dVDmUy1wnEOsUk

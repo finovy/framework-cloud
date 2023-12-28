@@ -36,6 +36,7 @@ public class AuthorizationExtensionProperties {
     @Data
     public static class ExtensionRegistration {
         private String host;
+        private String realm;
     }
 
     static {

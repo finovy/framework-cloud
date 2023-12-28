@@ -34,6 +34,7 @@ public enum OidcAuthorizationProvider {
     KEYCLOAK {
         // DEFAULT URL
         String HOST_PREFIX = "https://keycloak.finovy.cn";
+        String REALM = "master";
 
         @Override
         public ClientRegistration getBuilder(OAuth2ClientProperties properties, AuthorizationExtensionProperties config) {
@@ -48,12 +49,13 @@ public enum OidcAuthorizationProvider {
             final AuthorizationExtensionProperties.ExtensionRegistration extensionRegistration = config.getRegistration().get(registrationId);
             if (Objects.nonNull(extensionRegistration) && StringUtils.hasLength(extensionRegistration.getHost())) {
                 HOST_PREFIX = extensionRegistration.getHost();
+                REALM = extensionRegistration.getRealm();
             }
-            builder.authorizationUri(HOST_PREFIX + "/realms/master/protocol/openid-connect/auth");
-            builder.userInfoUri(HOST_PREFIX + "/realms/master/protocol/openid-connect/userinfo");
-            builder.tokenUri(HOST_PREFIX + "/realms/master/protocol/openid-connect/token");
-            builder.jwkSetUri(HOST_PREFIX + "/realms/master/protocol/openid-connect/certs");
-            builder.issuerUri(HOST_PREFIX + "/realms/master");
+            builder.authorizationUri(HOST_PREFIX + "/realms/" + REALM + "/protocol/openid-connect/auth");
+            builder.userInfoUri(HOST_PREFIX + "/realms/" + REALM + "/protocol/openid-connect/userinfo");
+            builder.tokenUri(HOST_PREFIX + "/realms/" + REALM + "/protocol/openid-connect/token");
+            builder.jwkSetUri(HOST_PREFIX + "/realms/" + REALM + "/protocol/openid-connect/certs");
+            builder.issuerUri(HOST_PREFIX + "/realms/" + REALM);
             builder.userNameAttributeName("email");
             // Configuration Precedence Principle
             return fromProperties(registrationId, properties, builder);
