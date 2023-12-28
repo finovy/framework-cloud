@@ -4,8 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import tech.finovy.framework.security.oidc.AuthorizationCallbackHandler;
-import tech.finovy.framework.security.oidc.UserDetailService;
+import tech.finovy.framework.security.oidc.extend.AuthorizationCallbackHandler;
+import tech.finovy.framework.security.oidc.extend.UserDetailService;
+import tech.finovy.framework.security.oidc.util.ResponseUtil;
+import tech.finovy.framework.security.oidc.util.RestBody;
+
+import java.io.IOException;
 
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
@@ -18,7 +22,8 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
-                                        HttpServletResponse response, AuthenticationException exception) {
+                                        HttpServletResponse response, AuthenticationException exception) throws IOException {
+        ResponseUtil.responseJsonWriter(response, RestBody.failure(401, exception.getMessage()));
         if (callbackHandler == null){
             return;
         }

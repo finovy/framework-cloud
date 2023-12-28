@@ -1,35 +1,89 @@
 package tech.finovy.framework.security.oidc.core.handler;
 
+import cn.hutool.core.collection.CollectionUtil;
+import jakarta.annotation.Nullable;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import tech.finovy.framework.security.oidc.AuthorizationCallbackHandler;
-import tech.finovy.framework.security.oidc.UserDetailService;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import tech.finovy.framework.security.oidc.core.config.AuthorizationExtensionProperties;
+import tech.finovy.framework.security.oidc.core.token.jwt.JwtTokenGenerator;
+import tech.finovy.framework.security.oidc.core.token.jwt.JwtTokenPair;
+import tech.finovy.framework.security.oidc.core.token.normal.TokenStorage;
+import tech.finovy.framework.security.oidc.extend.AuthorizationCallbackHandler;
+import tech.finovy.framework.security.oidc.extend.UserDetailService;
+import tech.finovy.framework.security.oidc.util.ResponseUtil;
+import tech.finovy.framework.security.oidc.util.RestBody;
 
-public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
+public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationSuccessHandler.class);
+    private final JwtTokenGenerator jwtTokenGenerator;
     private final AuthorizationCallbackHandler callbackHandler;
     private final UserDetailService userDetailService;
+    private final AuthorizationExtensionProperties properties;
+    private final TokenStorage tokenStorage;
 
-    public CustomAuthenticationSuccessHandler(AuthorizationCallbackHandler callbackHandler, UserDetailService userDetailService) {
+    public CustomAuthenticationSuccessHandler(@Nullable TokenStorage tokenStorage, JwtTokenGenerator jwtTokenGenerator, @Nullable AuthorizationCallbackHandler callbackHandler, UserDetailService userDetailService, AuthorizationExtensionProperties properties) {
+        this.tokenStorage = tokenStorage;
+        this.jwtTokenGenerator = jwtTokenGenerator;
         this.callbackHandler = callbackHandler;
         this.userDetailService = userDetailService;
+        this.properties = properties;
     }
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request,
-                                        HttpServletResponse response, Authentication authentication) {
-        try {
-            super.onAuthenticationSuccess(request, response, authentication);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        Map<String, Object> map = new HashMap<>(5);
+        String username = "";
+        if (authentication.getPrincipal() instanceof DefaultOidcUser) {
+            DefaultOidcUser principal = (DefaultOidcUser) authentication.getPrincipal();
+            username = principal.getUserInfo().getEmail();
         }
+        if (authentication.getPrincipal() instanceof User) {
+            User principal = (User) authentication.getPrincipal();
+            username = principal.getUsername();
+        }
+        if (properties.isJwtEnable()) {
+            if (response.isCommitted()) {
+                LOGGER.debug("Response has already been committed");
+                return;
+            }
+            map.put("time", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            map.put("flag", "success_login");
+
+            Set<String> roles = new HashSet<>();
+//            if (CollectionUtil.isNotEmpty(authorities)) {
+//                for (GrantedAuthority authority : authorities) {
+//                    String roleName = authority.getAuthority();
+//                    roles.add(roleName);
+//                }
+//            }
+            JwtTokenPair jwtTokenPair = jwtTokenGenerator.jwtTokenPair(username, roles, null);
+            map.put("access_token", jwtTokenPair.getAccessToken());
+            map.put("refresh_token", jwtTokenPair.getRefreshToken());
+        } else {
+            // 直接使用token
+            String token = UUID.randomUUID().toString();
+            map.put("token", token);
+            tokenStorage.put(token, username);
+        }
+        ResponseUtil.responseJsonWriter(response, RestBody.okData(map, "SUCCESS"));
+        // hook
         if (callbackHandler == null) {
             return;
         }
         callbackHandler.handleAuthorizationCallback(true, request, response, userDetailService.getUserInfo());
     }
-
-
 }

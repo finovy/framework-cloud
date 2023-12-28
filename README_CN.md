@@ -778,7 +778,7 @@ void test() {
 
 ##### 作用:
 
-快速对接oidc协议的三方登录服务端。如keycloak。
+快速集成Spring Security，实现对接oidc协议的三方登录服务端，如keycloak，feishu，teams等，同时也实现了账号密码登录。客户端只需实现对应的扩展接即可
 
 ##### 使用方式:
 
@@ -798,21 +798,30 @@ spring:
   security:
     oauth2:
       client:
-        # (必需)自定义登录页地址
-        login-page: /login
-        default-success-url: /host-management/resource-list
+        # 是否开启jwt响应,true则表示开启(返回格式是access token + refresh token)，false则表示关闭(返回格式目前支持单个token格式)
+        jwt-enable: false
+        # 退出登录地址
         logout-url: /logout
         # 不需要鉴权的接口
         pass-paths:
-          - /test1
+          - /*.html
+          - /config
         registration:
-          # 目前仅支持keycloak，可以提需求扩展
           keycloak:
+            # keycloak host，不填则使用默认值。
+            host: http://10.21.1.17:30055
             # (必需)id & secret (需要向keycloak管理员申请)
-            client-id: local_test_openid
-            client-secret: hqO49I1YtmKr4x74ODN4DnF97iuLr875
+            client-id: test-keycloak
+            client-secret: wzdMYmRewv4iXCS8D0dVDmUy1wnEOsUk
+            # 重定向uri，这里需要前端地址进行转发，具体可以参考demo实现
+            redirect-uri: http://127.0.0.1:8083/loading.html
 ```
+**前后端分离完整的对接流程**:
+![oidc_example](/docs/image/oidc_way.png)
+**地址配置:**
 
+1. 客户端触发登录地址: [http://127.0.0.1:8080/oauth2/authorization/keycloak](http://127.0.0.1:8082/oauth2/authorization/keycloak)。
+2. 提供给keycloak的回调地址: 填写前端地址 ,前端再请求到后端 https://127.0.0.1:8080/login/oidc/code/keycloak。 (注意参考demo实现)
 **地址配置:**
 
 1. 客户端触发登录地址: [http://127.0.0.1:8080/oauth2/authorization/keycloak](http://127.0.0.1:8082/oauth2/authorization/keycloak)
@@ -820,9 +829,17 @@ spring:
 
 **扩展应用:**
 
-1. 如果你想获取登录成功的用户信息,注入依赖 tech.finovy.framework.security.oidc.UserDetailService。
-2. 如果想在用户登录成功扩展逻辑，实现 tech.finovy.framework.security.oidc.AuthorizationCallbackHandler。
+1. 自定义账号密码验证逻辑:
 
+   实现 tech.finovy.framework.security.oidc.extend.CustomPasswordEncoder
+
+   实现 tech.finovy.framework.security.oidc.extend.UsernameAndPasswordService
+
+2. 自定义token存储逻辑: 实现 tech.finovy.framework.security.oidc.core.token.normal.TokenStorage
+
+3. 获取登录成功的用户信息: 注入依赖 tech.finovy.framework.security.oidc.UserDetailService
+
+4. 扩展用户登录成功失败逻辑: 实现 tech.finovy.framework.security.oidc.AuthorizationCallbackHandler
 #### 19. framework-starter-seata
 
 ##### 作用:
