@@ -12,10 +12,10 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2Clien
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -34,7 +34,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -50,24 +49,23 @@ import tech.finovy.framework.security.oidc.core.account.UserDetailsRepository;
 import tech.finovy.framework.security.oidc.core.config.AuthorizationExtensionProperties;
 import tech.finovy.framework.security.oidc.core.exception.SimpleAccessDeniedHandler;
 import tech.finovy.framework.security.oidc.core.exception.SimpleAuthenticationEntryPoint;
+import tech.finovy.framework.security.oidc.core.filter.CodeModeAuthenticationFilter;
 import tech.finovy.framework.security.oidc.core.filter.JwtAuthenticationFilter;
 import tech.finovy.framework.security.oidc.core.filter.PreLoginFilter;
 import tech.finovy.framework.security.oidc.core.filter.TokenAuthenticationFilter;
 import tech.finovy.framework.security.oidc.core.handler.*;
-import tech.finovy.framework.security.oidc.core.token.jwt.JwtProperties;
-import tech.finovy.framework.security.oidc.core.token.jwt.JwtTokenCacheStorage;
-import tech.finovy.framework.security.oidc.core.token.jwt.JwtTokenGenerator;
-import tech.finovy.framework.security.oidc.core.token.jwt.JwtTokenStorage;
 import tech.finovy.framework.security.oidc.core.oidc.CustomOidcUserService;
 import tech.finovy.framework.security.oidc.core.oidc.DelegateOAuth2AuthorizationCodeGrantRequestEntityConverter;
 import tech.finovy.framework.security.oidc.core.oidc.DelegateOAuth2UserRequestEntityConverter;
 import tech.finovy.framework.security.oidc.core.oidc.OidcAuthorizationProvider;
-import tech.finovy.framework.security.oidc.core.token.normal.TokenStorage;
+import tech.finovy.framework.security.oidc.core.token.jwt.JwtProperties;
+import tech.finovy.framework.security.oidc.core.token.jwt.JwtTokenCacheStorage;
+import tech.finovy.framework.security.oidc.core.token.jwt.JwtTokenGenerator;
+import tech.finovy.framework.security.oidc.core.token.normal.TokenManager;
 import tech.finovy.framework.security.oidc.extend.AuthorizationCallbackHandler;
 import tech.finovy.framework.security.oidc.extend.CustomPasswordEncoder;
 import tech.finovy.framework.security.oidc.extend.UserDetailService;
 import tech.finovy.framework.security.oidc.extend.UsernameAndPasswordService;
-import tech.finovy.framework.security.oidc.service.ClientProviderHolder;
 import tech.finovy.framework.security.oidc.service.UserDetailServiceImpl;
 
 import java.io.IOException;
@@ -96,11 +94,12 @@ public class OidcClientAutoConfiguration {
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SecurityFilterChain securityFilterChain(@Nullable JwtTokenCacheStorage jwtTokenCacheStorage, @Nullable TokenStorage tokenStorage,TokenAuthenticationFilter tokenAuthenticationFilter, @Nullable JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationSuccessHandler successHandler, PreLoginFilter preLoginFilter, HttpSecurity http, OidcUserService oidcUserService, AuthorizationExtensionProperties extensionConfig, DefaultAuthorizationCodeTokenResponseClient authorizationCodeTokenResponseClient, CustomAuthenticationFailureHandler customAuthenticationFailureHandler) throws Exception {
+    public SecurityFilterChain securityFilterChain(CodeModeAuthenticationFilter codeModeAuthenticationFilter, @Nullable JwtTokenCacheStorage jwtTokenCacheStorage, @Nullable TokenManager tokenManager, TokenAuthenticationFilter tokenAuthenticationFilter, @Nullable JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationSuccessHandler successHandler, PreLoginFilter preLoginFilter, HttpSecurity http, OidcUserService oidcUserService, AuthorizationExtensionProperties extensionConfig, DefaultAuthorizationCodeTokenResponseClient authorizationCodeTokenResponseClient, CustomAuthenticationFailureHandler customAuthenticationFailureHandler) throws Exception {
         if (jwtAuthenticationFilter != null) {
             http.addFilterBefore(jwtAuthenticationFilter, LogoutFilter.class);
         }
         http.addFilterBefore(tokenAuthenticationFilter, LogoutFilter.class);
+        http.addFilterAfter(codeModeAuthenticationFilter, TokenAuthenticationFilter.class);
         http.csrf(csrf -> {
                     csrf.disable();
                 })
@@ -131,10 +130,10 @@ public class OidcClientAutoConfiguration {
                 .oauth2Client(Customizer.withDefaults())
                 .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher(extensionConfig.getLogoutUrl()))
                         .addLogoutHandler(new CustomLogoutHandler())
-                        .logoutSuccessHandler(new CustomLogoutSuccessHandler(extensionConfig, jwtTokenCacheStorage, tokenStorage)))
-                /*.sessionManagement(maganger -> {
+                        .logoutSuccessHandler(new CustomLogoutSuccessHandler(extensionConfig, jwtTokenCacheStorage, tokenManager)))
+                .sessionManagement(maganger -> {
                     maganger.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                })*/;
+                });
         http.exceptionHandling().accessDeniedHandler(new SimpleAccessDeniedHandler()).authenticationEntryPoint(new SimpleAuthenticationEntryPoint());
         return http.getOrBuild();
     }
@@ -163,6 +162,7 @@ public class OidcClientAutoConfiguration {
     }
 
     @Bean
+    @Primary
     InMemoryClientRegistrationRepository clientRegistrationRepository(OAuth2ClientProperties properties, AuthorizationExtensionProperties config) {
         Set<String> registrationIds = Arrays.stream(OidcAuthorizationProvider.values())
                 .map(OidcAuthorizationProvider::getRegistrationId)
@@ -331,26 +331,22 @@ public class OidcClientAutoConfiguration {
     }
 
     @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler(@Nullable TokenStorage tokenStorage, JwtTokenGenerator jwtTokenGenerator, @Nullable AuthorizationCallbackHandler callbackHandler, UserDetailService userDetailService, AuthorizationExtensionProperties properties) {
-        final CustomAuthenticationSuccessHandler handler = new CustomAuthenticationSuccessHandler(tokenStorage, jwtTokenGenerator, callbackHandler, userDetailService, properties);
+    public AuthenticationSuccessHandler authenticationSuccessHandler(@Nullable TokenManager tokenManager, @Nullable JwtTokenGenerator jwtTokenGenerator, @Nullable AuthorizationCallbackHandler callbackHandler, UserDetailService userDetailService, AuthorizationExtensionProperties properties) {
+        final CustomAuthenticationSuccessHandler handler = new CustomAuthenticationSuccessHandler(tokenManager, jwtTokenGenerator, callbackHandler, userDetailService, properties);
         return handler;
     }
 
-    @Bean
-    public JwtTokenGenerator jwtTokenGenerator(@Nullable JwtTokenStorage jwtTokenStorage, JwtProperties jwtProperties) {
-        return new JwtTokenGenerator(jwtTokenStorage, jwtProperties);
-    }
 
     @Bean
-    public TokenAuthenticationFilter tokenAuthenticationFilter(@Nullable TokenStorage tokenStorage, AuthorizationExtensionProperties properties) {
-        if (!properties.isJwtEnable() && tokenStorage == null) {
-            throw new RuntimeException("Jwt is disable,tokenStorage is needed!");
+    public TokenAuthenticationFilter tokenAuthenticationFilter(@Nullable TokenManager tokenManager, AuthorizationExtensionProperties properties) {
+        if (!properties.isJwtEnable() && tokenManager == null) {
+            throw new RuntimeException("Jwt is disable,tokenManager is needed!");
         }
-        return new TokenAuthenticationFilter(tokenStorage, properties);
+        return new TokenAuthenticationFilter(tokenManager, properties);
     }
 
     @Bean
-    public ClientProviderHolder clientProviderHolder(){
-        return new ClientProviderHolder();
+    public CodeModeAuthenticationFilter codeModeAuthenticationFilter(AuthorizationExtensionProperties properties) {
+        return new CodeModeAuthenticationFilter(properties);
     }
 }

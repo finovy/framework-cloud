@@ -10,7 +10,10 @@ import tech.finovy.framework.security.oidc.common.SecurityConstants;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-
+/**
+ * @author Dax
+ * @since 13:41  2019-04-09
+ */
 public class RequestUtil {
     private static final Logger log = LoggerFactory.getLogger(RequestUtil.class);
 

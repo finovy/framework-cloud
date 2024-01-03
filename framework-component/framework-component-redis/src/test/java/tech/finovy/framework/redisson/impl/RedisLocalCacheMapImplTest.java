@@ -1,5 +1,6 @@
 package tech.finovy.framework.redisson.impl;
 
+import com.google.errorprone.annotations.Var;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,7 +8,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.redisson.api.LocalCachedMapOptions;
 import org.redisson.api.RLocalCachedMap;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
+import org.redisson.api.RedissonClient;
+import tech.finovy.framework.redisson.holder.RedisContext;
 import tech.finovy.framework.redisson.holder.RedisContextHolder;
 
 import java.io.Serializable;
@@ -25,13 +27,15 @@ import static org.mockito.MockitoAnnotations.openMocks;
 class RedisLocalCacheMapImplTest {
 
     @Mock
-    private RedissonClientInterface mockClient;
+    private RedissonClient mockClient;
     @Mock
     private LocalCachedMapOptions mockOptions;
 
     private RedisLocalCacheMapImpl redisLocalCacheMapImplUnderTest;
 
     private AutoCloseable mockitoCloseable;
+    
+    RedisContext redisContext = RedisContextHolder.get();
 
     @BeforeEach
     void setUp() {
@@ -50,7 +54,7 @@ class RedisLocalCacheMapImplTest {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
 
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -60,7 +64,7 @@ class RedisLocalCacheMapImplTest {
     @Test
     void testFastPut() {
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
         // Run the test
         final boolean result = redisLocalCacheMapImplUnderTest.fastPut("mapKey", "key", "value");
@@ -70,7 +74,7 @@ class RedisLocalCacheMapImplTest {
     @Test
     void testGet() {
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -86,7 +90,7 @@ class RedisLocalCacheMapImplTest {
             return "value";
         };
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -99,7 +103,7 @@ class RedisLocalCacheMapImplTest {
     void testContainsKey() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -113,7 +117,7 @@ class RedisLocalCacheMapImplTest {
     void testIsEmpty() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -127,7 +131,7 @@ class RedisLocalCacheMapImplTest {
     void testSize() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -141,7 +145,7 @@ class RedisLocalCacheMapImplTest {
     void testRemove() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -153,7 +157,7 @@ class RedisLocalCacheMapImplTest {
     @Test
     void testFastRemove() {
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -168,7 +172,7 @@ class RedisLocalCacheMapImplTest {
         // Setup
         final Map<String, ? extends Serializable> m = Map.ofEntries(Map.entry("value", "value"));
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -181,7 +185,7 @@ class RedisLocalCacheMapImplTest {
     void testClear() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -194,7 +198,7 @@ class RedisLocalCacheMapImplTest {
     void testKeySet() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
         when(cachedMap.keySet()).thenReturn(Set.of("value"));
 
@@ -209,7 +213,7 @@ class RedisLocalCacheMapImplTest {
     void testReadAllKeySet() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
         when(cachedMap.readAllKeySet()).thenReturn(Set.of("value"));
 
@@ -224,7 +228,7 @@ class RedisLocalCacheMapImplTest {
     void testCachedKeySet() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
         redisLocalCacheMapImplUnderTest.cachedKeySet("mapKey");
     }
@@ -233,7 +237,7 @@ class RedisLocalCacheMapImplTest {
     void testCachedValues() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -246,7 +250,7 @@ class RedisLocalCacheMapImplTest {
     void testPreloadCache1() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -259,7 +263,7 @@ class RedisLocalCacheMapImplTest {
     void testPreloadCache2() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -272,7 +276,7 @@ class RedisLocalCacheMapImplTest {
     void testDestroy() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -285,7 +289,7 @@ class RedisLocalCacheMapImplTest {
     void testValues() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test
@@ -298,7 +302,7 @@ class RedisLocalCacheMapImplTest {
     void testReadAllValues() {
         // Setup
         final RLocalCachedMap cachedMap = Mockito.mock(RLocalCachedMap.class);
-        when(mockClient.createLocalCacheMapKey("mapKey")).thenReturn("name");
+        when(redisContext.createLocalCacheMapKey("mapKey")).thenReturn("name");
         when(mockClient.getLocalCachedMap(eq("name"), any(LocalCachedMapOptions.class))).thenReturn(cachedMap);
 
         // Run the test

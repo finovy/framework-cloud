@@ -8,6 +8,7 @@ import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.poifs.filesystem.FileMagic;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import tech.finovy.framework.exception.BusinessException;
 import tech.finovy.framework.exception.CommonExEnum;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,9 +66,9 @@ public class ExcelUtil {
         //表头前景设置淡蓝色
         headWriteCellStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
         WriteFont headWriteFont = new WriteFont();
-        headWriteFont.setBold(true);
+//        headWriteFont.setBold(true);
         headWriteFont.setFontName("宋体");
-        headWriteFont.setFontHeightInPoints((short)30);
+        headWriteFont.setFontHeightInPoints((short)11);
         headWriteCellStyle.setWriteFont(headWriteFont);
         List<WriteCellStyle>   listCntWritCellSty =  new ArrayList<>();
 
@@ -96,7 +96,7 @@ public class ExcelUtil {
      * @param sheetName 导入文件的 sheet 名
      */
     public static <T> void writeExcel(HttpServletResponse response, List<?> list, String fileName,
-                                  String sheetName, Class<T> headClazz) {
+                                      String sheetName, Class<T> headClazz) {
 
         EasyExcel.write(getOutputStream(fileName, response)).sheet(1).sheetName(sheetName).head(headClazz).registerWriteHandler(myHorizontalCellStyleStrategy()).doWrite(list);
     }

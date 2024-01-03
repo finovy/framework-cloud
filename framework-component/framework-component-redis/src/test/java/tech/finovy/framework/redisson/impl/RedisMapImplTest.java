@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.redisson.api.RMap;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
+import org.redisson.api.RedissonClient;
+import tech.finovy.framework.redisson.holder.RedisContext;
 import tech.finovy.framework.redisson.holder.RedisContextHolder;
 
 import java.io.Serializable;
@@ -22,11 +23,13 @@ import static org.mockito.MockitoAnnotations.openMocks;
 class RedisMapImplTest {
 
     @Mock
-    private RedissonClientInterface mockClient;
+    private RedissonClient mockClient;
 
     private RedisMapImpl redisMapImplUnderTest;
 
     private AutoCloseable mockitoCloseable;
+
+    final RedisContext redisContext = RedisContextHolder.get();
 
     @BeforeEach
     void setUp() {
@@ -43,7 +46,7 @@ class RedisMapImplTest {
     @Test
     void testPut() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
         // Run the test
@@ -53,7 +56,7 @@ class RedisMapImplTest {
     @Test
     void testFastPut() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
         // Run the test
@@ -65,7 +68,7 @@ class RedisMapImplTest {
     @Test
     void testGet() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -85,7 +88,7 @@ class RedisMapImplTest {
         final Function<? super String, ? extends Serializable> mappingFunction = val -> {
             return "value";
         };
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -96,7 +99,7 @@ class RedisMapImplTest {
     @Test
     void testContainsKey() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -110,7 +113,7 @@ class RedisMapImplTest {
     @Test
     void testIsEmpty() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -124,7 +127,7 @@ class RedisMapImplTest {
     @Test
     void testSize() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -138,7 +141,7 @@ class RedisMapImplTest {
     @Test
     void testRemove() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -149,7 +152,7 @@ class RedisMapImplTest {
     @Test
     void testFastRemove() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -164,7 +167,7 @@ class RedisMapImplTest {
     void testPutAll() {
         // Setup
         final Map<String, ? extends Serializable> m = Map.ofEntries(Map.entry("value", "value"));
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -177,7 +180,7 @@ class RedisMapImplTest {
     @Test
     void testClear() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -190,7 +193,7 @@ class RedisMapImplTest {
     @Test
     void testKeySet() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
         when(map.keySet()).thenReturn(Set.of("value"));
@@ -205,7 +208,7 @@ class RedisMapImplTest {
     @Test
     void testReadAllKeySet() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
         when(map.readAllKeySet()).thenReturn(Set.of("value"));
@@ -220,7 +223,7 @@ class RedisMapImplTest {
     @Test
     void testReadAllValues() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -233,7 +236,7 @@ class RedisMapImplTest {
     @Test
     void testDestroy() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 
@@ -246,7 +249,7 @@ class RedisMapImplTest {
     @Test
     void testValues() {
         // Setup
-        when(mockClient.createMapKey(Mockito.anyString())).thenReturn("mapKey");
+        when(redisContext.createMapKey(Mockito.anyString())).thenReturn("mapKey");
         final RMap map = Mockito.mock(RMap.class);
         when(mockClient.getMap(Mockito.anyString())).thenReturn(map);
 

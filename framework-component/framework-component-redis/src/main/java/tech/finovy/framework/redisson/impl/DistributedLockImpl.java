@@ -3,13 +3,13 @@ package tech.finovy.framework.redisson.impl;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.finovy.framework.redis.entity.lock.entity.DistributedLock;
 import tech.finovy.framework.redis.entity.lock.exception.DistributedLockException;
 import tech.finovy.framework.redisson.api.DistributedLockApi;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
 import tech.finovy.framework.redisson.holder.RedisContext;
 import tech.finovy.framework.redisson.holder.RedisContextHolder;
 
@@ -24,12 +24,12 @@ public class DistributedLockImpl implements DistributedLockApi {
 
     @Override
     public DistributedLock lock(DistributedLock lock) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         DistributedLock vLock = verifyLock(lock);
         if (vLock.getErrMsg() != null) {
             return vLock;
         }
-        String key = client.createKey(lock.getKey(), DistributedLock.class.getSimpleName(), false);
+        String key = context.createKey(lock.getKey(), DistributedLock.class.getSimpleName(), false);
         RBucket<DistributedLock> lockCache = client.getBucket(key, JsonJacksonCodec.INSTANCE);
         boolean lockStatus;
         if (lock.getId() <= 0L) {
@@ -85,12 +85,12 @@ public class DistributedLockImpl implements DistributedLockApi {
 
     @Override
     public DistributedLock unlock(DistributedLock lock) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         DistributedLock vLock = verifyLock(lock);
         if (vLock.getErrMsg() != null) {
             return vLock;
         }
-        String key = client.createKey(lock.getKey(), DistributedLock.class.getSimpleName(), false);
+        String key = context.createKey(lock.getKey(), DistributedLock.class.getSimpleName(), false);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Unlock key:{}", key);
         }
@@ -122,11 +122,11 @@ public class DistributedLockImpl implements DistributedLockApi {
 
     @Override
     public DistributedLock finished(DistributedLock lock) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         if (StringUtils.isEmpty(lock.getKey())) {
             throw new DistributedLockException();
         }
-        String key = client.createKey(lock.getKey(), DistributedLock.class.getSimpleName(), false);
+        String key = context.createKey(lock.getKey(), DistributedLock.class.getSimpleName(), false);
         RBucket<DistributedLock> bucket = client.getBucket(key, JsonJacksonCodec.INSTANCE);
         if (bucket.isExists()) {
             DistributedLock locked = bucket.get();

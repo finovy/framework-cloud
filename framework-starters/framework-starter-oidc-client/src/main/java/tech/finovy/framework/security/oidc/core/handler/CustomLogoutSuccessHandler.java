@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import tech.finovy.framework.security.oidc.core.config.AuthorizationExtensionProperties;
 import tech.finovy.framework.security.oidc.core.token.jwt.JwtTokenCacheStorage;
-import tech.finovy.framework.security.oidc.core.token.normal.TokenStorage;
+import tech.finovy.framework.security.oidc.core.token.normal.TokenManager;
 import tech.finovy.framework.security.oidc.util.RequestUtil;
 import tech.finovy.framework.security.oidc.util.ResponseUtil;
 import tech.finovy.framework.security.oidc.util.RestBody;
@@ -21,11 +21,11 @@ import java.io.IOException;
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
     private final AuthorizationExtensionProperties properties;
-    private final TokenStorage tokenStorage;
+    private final TokenManager tokenManager;
     private final JwtTokenCacheStorage jwtTokenCacheStorage;
-    public CustomLogoutSuccessHandler(AuthorizationExtensionProperties properties,@Nullable JwtTokenCacheStorage jwtTokenCacheStorage, @Nullable TokenStorage tokenStorage) {
+    public CustomLogoutSuccessHandler(AuthorizationExtensionProperties properties,@Nullable JwtTokenCacheStorage jwtTokenCacheStorage, @Nullable TokenManager tokenManager) {
         this.properties = properties;
-        this.tokenStorage = tokenStorage;
+        this.tokenManager = tokenManager;
         this.jwtTokenCacheStorage = jwtTokenCacheStorage;
     }
 
@@ -37,7 +37,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
             jwtTokenCacheStorage.expire(username);
         } else {
             String token = RequestUtil.obtainAuthorization(request, properties.getTokenHeader(), properties.getTokenParameter());
-            tokenStorage.expire(token);
+            tokenManager.expire(token);
         }
         log.info("username: {}  is offline now", username);
         ResponseUtil.responseJsonWriter(response, RestBody.ok("logout success"));

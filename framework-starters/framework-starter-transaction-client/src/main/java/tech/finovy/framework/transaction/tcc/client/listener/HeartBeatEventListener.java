@@ -13,10 +13,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
 
-/**
- * @Author: Ryan Luo
- * @Date: 2023/2/20 18:39
- */
 public class HeartBeatEventListener extends AbstractTransactionEventListener<HeartBeatEvent> {
 
     public static final ConcurrentHashMap<String, Semaphore> controls = new ConcurrentHashMap<>(2);

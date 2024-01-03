@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,6 @@ import tech.finovy.framework.disruptor.core.DisruptorEventConfiguration;
 import tech.finovy.framework.distributed.lock.api.DistributedLockService;
 import tech.finovy.framework.redis.entity.lock.entity.DistributedLock;
 import tech.finovy.framework.redisson.autoconfigure.RedissonClientAutoConfiguration;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
 import tech.finovy.framework.redisson.holder.RedisContextHolder;
 
 @Slf4j
@@ -33,7 +33,7 @@ public class DistributedLockTest {
     @Test
     @DisplayName("TestDistributedLockService")
     void distributedLockServiceTest() {
-        final RedissonClientInterface client = RedisContextHolder.get().getClient();
+        final RedissonClient client = RedisContextHolder.get().getClient();
         Assertions.assertNotNull(client);
         DistributedLock lock=new DistributedLock();
         long time=System.currentTimeMillis();

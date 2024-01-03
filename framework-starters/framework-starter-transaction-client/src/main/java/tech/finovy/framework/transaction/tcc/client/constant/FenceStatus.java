@@ -1,9 +1,5 @@
 package tech.finovy.framework.transaction.tcc.client.constant;
 
-/**
- * @Author: Ryan Luo
- * @Date: 2023/3/3 18:36
- */
 public enum FenceStatus {
 
     TRIED,

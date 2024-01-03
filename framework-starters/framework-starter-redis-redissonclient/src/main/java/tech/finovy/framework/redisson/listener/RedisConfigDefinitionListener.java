@@ -10,7 +10,6 @@ import tech.finovy.framework.redisson.autoconfigure.RedissonProperties;
 import tech.finovy.framework.redisson.config.RedissonConfiguration;
 import tech.finovy.framework.redisson.holder.RedisContext;
 import tech.finovy.framework.redisson.holder.RedisContextHolder;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
 
 import java.io.IOException;
 
@@ -39,9 +38,8 @@ public class RedisConfigDefinitionListener extends AbstractNacosConfigDefinition
 
     @Override
     public void refresh(String dataId, String dataGroup, Config config, int refreshCount) {
-        final RedissonClientInterface client = RedisClientFactory.init(redissonConfiguration, config, refreshCount);
         final RedisContext redisContext = RedisContextHolder.get();
-        redisContext.setClient(client);
+         RedisClientFactory.init(redisContext,redissonConfiguration, config, refreshCount);
     }
 
     @Override

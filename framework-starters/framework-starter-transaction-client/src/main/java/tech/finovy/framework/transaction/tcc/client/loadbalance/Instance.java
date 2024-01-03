@@ -3,10 +3,6 @@ package tech.finovy.framework.transaction.tcc.client.loadbalance;
 
 import tech.finovy.framework.transaction.tcc.client.constant.Constants;
 
-/**
- * @Author: Ryan Luo
- * @Date: 2023/2/23 15:35
- */
 public class Instance implements Comparable<Instance> {
     /**
      * 实例名称

@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 /**
  * ResponseUtil
  *
+ * @author Felordcn
+ * @since 11:20 2019/10/28
  **/
 public class ResponseUtil {
     private ResponseUtil() {

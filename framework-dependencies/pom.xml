@@ -13,14 +13,14 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <properties>
-        <revision>0.1.0-SNAPSHOT</revision>
+        <revision>0.1.0</revision>
         <java.version>18</java.version>
         <sonar.skip>true</sonar.skip>
         <!--util-->
         <bcprov-jdk15on.version>1.70</bcprov-jdk15on.version>
         <bcprov-jdk16.version>1.46</bcprov-jdk16.version>
         <bcprov-ext-jdk15to18.version>1.75</bcprov-ext-jdk15to18.version>
-        <hutool.version>5.7.22</hutool.version>
+        <hutool.version>5.8.22</hutool.version>
         <easyexcel.version>2.2.11</easyexcel.version>
         <!--common-->
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
@@ -33,7 +33,7 @@
         <aliyun-sdk-oss.version>3.12.0</aliyun-sdk-oss.version>
         <transmittable-thread-local.version>2.12.6</transmittable-thread-local.version>
         <perf4j.version>0.9.16</perf4j.version>
-        <jjwt.version>0.9.0</jjwt.version>
+        <jjwt.version>0.12.3</jjwt.version>
         <curator.version>5.1.0</curator.version>
         <caffeine.version>3.1.5</caffeine.version>
         <cache-api.version>1.1.1</cache-api.version>
@@ -506,6 +506,11 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-http</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
             <dependency>

@@ -4,9 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.redisson.config.ConfigSupport;
 import tech.finovy.framework.redisson.config.RedissonConfiguration;
+import tech.finovy.framework.redisson.holder.RedisContextHolder;
 
 import java.io.IOException;
 
@@ -18,7 +21,7 @@ class RedissionExtImplTest {
     @Mock
     private Config mockConfig;
 
-    private RedissonExtImpl redissionExtImplUnderTest;
+    private RedissonClient client;
 
     private Config config;
 
@@ -52,13 +55,13 @@ class RedissionExtImplTest {
                 "codec: !<org.redisson.codec.JsonJacksonCodec> {}";
         ConfigSupport support = new ConfigSupport();
         config = support.fromYAML(configStr, Config.class);
-
-        redissionExtImplUnderTest = new RedissonExtImpl(config);
+        client = Redisson.create(config);
+        RedisContextHolder.get().setClient(client);
         final RedissonConfiguration redissonConfiguration = new RedissonConfiguration();
         redissonConfiguration.setKeyHashModSize(1024);
         redissonConfiguration.setKeyVersion("1.0");
         redissonConfiguration.setKeyPrefix("test");
-        redissionExtImplUnderTest.setRedissonConfiguration(redissonConfiguration,1);
+        RedisContextHolder.get().setRedissonConfiguration(redissonConfiguration,1);
     }
 
 
@@ -75,7 +78,7 @@ class RedissionExtImplTest {
         configuration.setConnectDelay(0L);
 
         // Run the test
-        redissionExtImplUnderTest.setRedissonConfiguration(configuration, 0);
+        RedisContextHolder.get().setRedissonConfiguration(configuration, 0);
 
         // Verify the results
     }
@@ -84,7 +87,7 @@ class RedissionExtImplTest {
     void testIsDebug() {
         // Setup
         // Run the test
-        final boolean result = redissionExtImplUnderTest.isDebug();
+        final boolean result = RedisContextHolder.get().isDebug();
 
         // Verify the results
         assertFalse(result);
@@ -94,7 +97,7 @@ class RedissionExtImplTest {
     void testCreateKey1() {
         // Setup
         // Run the test
-        final String result = redissionExtImplUnderTest.createKey("key", "type", false);
+        final String result = RedisContextHolder.get().createKey("key", "type", false);
 
         // Verify the results
         assertEquals("test:1.0:type:key", result);
@@ -104,7 +107,7 @@ class RedissionExtImplTest {
     void testCreateKey2() {
         // Setup
         // Run the test
-        final String result = redissionExtImplUnderTest.createKey("key", "type");
+        final String result = RedisContextHolder.get().createKey("key", "type");
 
         // Verify the results
         assertEquals("test:1.0:type:key", result);
@@ -114,7 +117,7 @@ class RedissionExtImplTest {
     void testCreateKey3() {
         // Setup
         // Run the test
-        final String result = redissionExtImplUnderTest.createKey("key");
+        final String result = RedisContextHolder.get().createKey("key");
 
         // Verify the results
         assertEquals("test:1.0:key", result);
@@ -124,7 +127,7 @@ class RedissionExtImplTest {
     void testCreateMapKey() {
         // Setup
         // Run the test
-        final String result = redissionExtImplUnderTest.createMapKey("key");
+        final String result = RedisContextHolder.get().createMapKey("key");
 
         // Verify the results
         assertEquals("test:1.0:RMap:key", result);
@@ -134,7 +137,7 @@ class RedissionExtImplTest {
     void testCreateLocalCacheMapKey() {
         // Setup
         // Run the test
-        final String result = redissionExtImplUnderTest.createLocalCacheMapKey("key");
+        final String result = RedisContextHolder.get().createLocalCacheMapKey("key");
 
         // Verify the results
         assertEquals("test:1.0:LocalCacheMap:key", result);
@@ -142,14 +145,14 @@ class RedissionExtImplTest {
 
     @Test
     void testCalHash() {
-        assertEquals(-1180979736, redissionExtImplUnderTest.calHash("key"));
+        assertEquals(-1180979736, RedisContextHolder.get().calHash("key"));
     }
 
     @Test
     void testCalKeyHash() {
         // Setup
         // Run the test
-        final int result = redissionExtImplUnderTest.calKeyHash("key");
+        final int result = RedisContextHolder.get().calKeyHash("key");
 
         // Verify the results
         assertEquals(-536, result);
@@ -158,7 +161,7 @@ class RedissionExtImplTest {
     @Test
     void testCreate() {
         // Run the test
-        final RedissonClientInterface result = RedissonExtImpl.create(config);
+        final RedissonClient result = Redisson.create(config);
         Assertions.assertNotNull(result);
     }
 }

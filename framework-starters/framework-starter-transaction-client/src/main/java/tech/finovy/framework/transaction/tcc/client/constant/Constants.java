@@ -1,9 +1,5 @@
 package tech.finovy.framework.transaction.tcc.client.constant;
 
-/**
- * @Author: Ryan Luo
- * @Date: 2023/2/28 10:36
- */
 public class Constants {
 
     public static final String SECRET_KEY = "secretKey";

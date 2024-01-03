@@ -17,7 +17,7 @@ public class AuthorizationExtensionProperties {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationExtensionProperties.class);
 
-    private List<String> passPaths;
+    private List<String> passPaths = new ArrayList<>();
 
     private String logoutUrl = "/logout";
 
@@ -30,6 +30,8 @@ public class AuthorizationExtensionProperties {
     private String defaultAccountLoginUrl = "/login/account";
 
     private boolean jwtEnable = true;
+    private boolean codeModeEnable = false;
+    private String codeModeUsername = "developer";
     private String tokenHeader = "Authorization";
     private String tokenParameter = "token";
 

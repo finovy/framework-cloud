@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.redisson.api.RAtomicLong;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
+import org.redisson.api.RedissonClient;
+import tech.finovy.framework.redisson.holder.RedisContext;
 import tech.finovy.framework.redisson.holder.RedisContextHolder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +17,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 class DistributedIdImplTest {
 
     @Mock
-    private RedissonClientInterface mockClient;
+    private RedissonClient mockClient;
 
     private DistributedIdImpl distributedIdImplUnderTest;
 
@@ -36,9 +37,10 @@ class DistributedIdImplTest {
 
     @Test
     void testIncrementAndGet() {
+        final RedisContext redisContext = RedisContextHolder.get();
         // Setup
         final RAtomicLong redissonAtomicLong = Mockito.mock(RAtomicLong.class);
-        when(mockClient.createKey("key", "ID")).thenReturn("name");
+        when(redisContext.createKey("key", "ID")).thenReturn("name");
         when(mockClient.getAtomicLong("name")).thenReturn(redissonAtomicLong);
         when(redissonAtomicLong.getAndIncrement()).thenReturn(1L);
         // Run the test
@@ -49,9 +51,10 @@ class DistributedIdImplTest {
 
     @Test
     void testSet() {
+        final RedisContext redisContext = RedisContextHolder.get();
         // Setup
         final RAtomicLong redissonAtomicLong = Mockito.mock(RAtomicLong.class);
-        when(mockClient.createKey("key", "ID")).thenReturn("name");
+        when(redisContext.createKey("key", "ID")).thenReturn("name");
         when(mockClient.getAtomicLong("name")).thenReturn(redissonAtomicLong);
         // Run the test
         distributedIdImplUnderTest.set("key", 0L);

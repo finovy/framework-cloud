@@ -10,9 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import tech.finovy.framework.security.oidc.common.SecurityConstants;
 import tech.finovy.framework.security.oidc.core.config.AuthorizationExtensionProperties;
-import tech.finovy.framework.security.oidc.core.token.normal.TokenStorage;
+import tech.finovy.framework.security.oidc.core.token.normal.TokenManager;
 import tech.finovy.framework.security.oidc.util.RequestUtil;
 
 import java.io.IOException;
@@ -20,23 +19,23 @@ import java.io.IOException;
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final AuthorizationExtensionProperties properties;
-    private final TokenStorage tokenStorage;
+    private final TokenManager tokenManager;
 
-    public TokenAuthenticationFilter(TokenStorage tokenStorage, AuthorizationExtensionProperties properties) {
-        this.tokenStorage = tokenStorage;
+    public TokenAuthenticationFilter(TokenManager tokenManager, AuthorizationExtensionProperties properties) {
+        this.tokenManager = tokenManager;
         this.properties = properties;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        if (properties.isJwtEnable()){
+        if (properties.isJwtEnable()) {
             chain.doFilter(request, response);
             return;
         }
         String token = RequestUtil.obtainAuthorization(request, properties.getTokenHeader(), properties.getTokenParameter());
         UserDetails userDetails = null;
         if (StringUtils.hasText(token)) {
-            userDetails = tokenStorage.get(token);
+            userDetails = tokenManager.get(token);
         }
         if (!ObjectUtils.isEmpty(userDetails)) {
             UsernamePasswordAuthenticationToken authentication =

@@ -6,9 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import tech.finovy.framework.redis.entity.lock.entity.DistributedLock;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
+import tech.finovy.framework.redisson.holder.RedisContext;
 import tech.finovy.framework.redisson.holder.RedisContextHolder;
 
 import java.util.concurrent.TimeUnit;
@@ -21,7 +22,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 class DistributedLockImplTest {
 
     @Mock
-    private RedissonClientInterface mockClient;
+    private RedissonClient mockClient;
 
     private DistributedLockImpl distributedLockImplUnderTest;
 
@@ -41,11 +42,12 @@ class DistributedLockImplTest {
 
     @Test
     void testLock() {
+        final RedisContext redisContext = RedisContextHolder.get();
         // Setup
         final DistributedLock lock = new DistributedLock();
         lock.setId(123L);
         lock.setKey("test-lock");
-        when(mockClient.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
         final RBucket bucket = mock(RBucket.class);
         when(mockClient.getBucket(anyString(), any(JsonJacksonCodec.class))).thenReturn(bucket);
         // case 1: lock success
@@ -67,8 +69,9 @@ class DistributedLockImplTest {
 
     @Test
     void testErrorBranchLock(){
+        final RedisContext redisContext = RedisContextHolder.get();
         final RBucket errorBucket = mock(RBucket.class);
-        when(mockClient.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
         when(mockClient.getBucket(anyString(), any(JsonJacksonCodec.class))).thenReturn(errorBucket);
         // exception branch
         final DistributedLock errorLock = new DistributedLock();
@@ -91,11 +94,12 @@ class DistributedLockImplTest {
 
     @Test
     void testUnlock() {
+        final RedisContext redisContext = RedisContextHolder.get();
         // Setup
         final DistributedLock lock = new DistributedLock();
         lock.setId(123L);
         lock.setKey("test-lock");
-        when(mockClient.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
         final RBucket bucket = mock(RBucket.class);
         when(mockClient.getBucket(anyString(), any(JsonJacksonCodec.class))).thenReturn(bucket);
         // Run the test
@@ -114,11 +118,12 @@ class DistributedLockImplTest {
 
     @Test
     void testErrorBranchUnlock(){
+        final RedisContext redisContext = RedisContextHolder.get();
         Assertions.assertNotNull(distributedLockImplUnderTest.unlock(null).getErrMsg());
         final DistributedLock errorLock = new DistributedLock();
         Assertions.assertNotNull(distributedLockImplUnderTest.unlock(errorLock).getErrMsg());
         final RBucket errorBucket = mock(RBucket.class);
-        when(mockClient.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
         when(mockClient.getBucket(anyString(), any(JsonJacksonCodec.class))).thenReturn(errorBucket);
         // exception branch
         errorLock.setId(-1L);
@@ -130,6 +135,7 @@ class DistributedLockImplTest {
 
     @Test
     void testFinished() {
+        final RedisContext redisContext = RedisContextHolder.get();
         // Setup
         final DistributedLock lock = new DistributedLock();
         boolean error = false;
@@ -142,7 +148,7 @@ class DistributedLockImplTest {
 
         lock.setId(123L);
         lock.setKey("test-lock");
-        when(mockClient.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
         final RBucket bucket = mock(RBucket.class);
         when(mockClient.getBucket(anyString(), any(JsonJacksonCodec.class))).thenReturn(bucket);
         when(bucket.isExists()).thenReturn(true);

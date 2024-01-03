@@ -13,7 +13,10 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-
+/**
+ * @author dax
+ * @since 2019/11/6 22:19
+ */
 public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {

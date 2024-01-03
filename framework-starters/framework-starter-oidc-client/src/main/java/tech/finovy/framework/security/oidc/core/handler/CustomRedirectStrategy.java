@@ -15,7 +15,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * @Author: Ryan Luo
+ * @Date: 2023/12/27 18:30
+ */
 public class CustomRedirectStrategy implements RedirectStrategy {
     protected final Log logger = LogFactory.getLog(getClass());
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class MybatisConfigAutoConfiguration {
             @Override
             public Expression getTenantId() {
                 String appid0 = TenantContext.getCurrentTenant();
-                if (!StringUtils.hasLength(appid0)) {
+                if (StringUtils.hasLength(appid0)) {
                     return new StringValue(appid0);
                 }
                 String appid = RpcContext.getContext().getAttachment(Constant.APPID);
@@ -61,6 +62,7 @@ public class MybatisConfigAutoConfiguration {
         // If you are using the pagination plugin, make sure to add the TenantLineInnerInterceptor first, and then add the PaginationInnerInterceptor.
         // When using the pagination plugin, it is essential to set MybatisConfiguration#useDeprecatedExecutor = false.
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         return interceptor;
     }
 }

@@ -2,10 +2,6 @@ package tech.finovy.framework.transaction.tcc.client.exception;
 
 import java.io.Serializable;
 
-/**
- * @Author: Ryan Luo
- * @Date: 2023/2/24 10:08
- */
 public class TccClientException extends RuntimeException implements Serializable {
 
     private static final long serialVersionUID = 872810047788537741L;

@@ -5,8 +5,6 @@ import com.alibaba.fastjson.TypeReference;
 /**
  * 客户端需实现此接口，用于TCC调用
  *
- * @Author: Ryan Luo
- * @Date: 2023/2/24 9:44
  */
 public interface TccClientService<T> {
 

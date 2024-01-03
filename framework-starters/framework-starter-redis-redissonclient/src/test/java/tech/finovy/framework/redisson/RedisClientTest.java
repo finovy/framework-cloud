@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +22,6 @@ import tech.finovy.framework.redisson.holder.RedisContextHolder;
 import tech.finovy.framework.redisson.listener.RedisConfigDefinitionListener;
 import tech.finovy.framework.redisson.api.CacheApi;
 import tech.finovy.framework.redisson.autoconfigure.RedissonClientAutoConfiguration;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,15 +47,14 @@ public class RedisClientTest {
     @Test
     @DisplayName("TestKeyHash")
     void keyHashTest() {
-        final RedissonClientInterface client = RedisContextHolder.get().getClient();
-
-        int x = client.calHash("test");
-        int x2 = client.calHash("test");
+        final RedisContext redisContext = RedisContextHolder.get();
+        final RedissonClient client = redisContext.getClient();
+        int x = redisContext.calHash("test");
+        int x2 = redisContext.calHash("test");
         Assertions.assertEquals(x, x2);
-        x = client.calHash("test");
-        x2 = client.calHash("test");
+        x = redisContext.calHash("test");
+        x2 = redisContext.calHash("test");
         Assertions.assertEquals(x, x2);
-
         // for cover
         redisConfigDefinitionListener.getOrder();
     }
@@ -92,7 +91,7 @@ public class RedisClientTest {
     @Test
     @DisplayName("TestBloomFilter")
     void bloomFilterTest() {
-        final RedissonClientInterface client = RedisContextHolder.get().getClient();
+        final RedissonClient client = RedisContextHolder.get().getClient();
         RBloomFilter<String> bloomFilter = client.getBloomFilter("00");
         bloomFilter.tryInit(55000000L, 0.03);
         bloomFilter.add("1");
@@ -131,7 +130,7 @@ public class RedisClientTest {
 
     private void testRlock() {
         try {
-            final RedissonClientInterface client = RedisContextHolder.get().getClient();
+            final RedissonClient client = RedisContextHolder.get().getClient();
             RLock lock = client.getLock("123");
             boolean res = lock.tryLock(1, 10, TimeUnit.SECONDS);
             if (res) {
@@ -152,9 +151,9 @@ public class RedisClientTest {
     @AfterAll
     public static void testDown() {
         final RedisContext redisContext = RedisContextHolder.get();
-        Assertions.assertThrows(RuntimeException.class, () -> RedisClientFactory.init(null, null, 0));
+        Assertions.assertThrows(RuntimeException.class, () -> RedisClientFactory.init(null, null,null, 0));
         RedisClientFactory.shutdown(1);
-        final RedissonClientInterface client = redisContext.getClient();
+        final RedissonClient client = redisContext.getClient();
         client.shutdown();
     }
 }

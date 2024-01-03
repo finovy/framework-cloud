@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import tech.finovy.framework.redis.entity.cache.entity.*;
 import tech.finovy.framework.redisson.api.CacheApi;
 import tech.finovy.framework.redisson.config.RedissonConfiguration;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
 import tech.finovy.framework.redisson.holder.RedisContext;
 import tech.finovy.framework.redisson.holder.RedisContextHolder;
 
@@ -42,7 +41,7 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public <T extends Serializable> CachePack<T> getCache(Class<T> dataType, String key, boolean skipPrefix) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         CachePack<T> pack = new CachePack<>(key, skipPrefix);
         CacheKey cacheKey = new CacheKey(key, skipPrefix);
         if (dataType == null) {
@@ -52,7 +51,7 @@ public class RedisCacheImpl implements CacheApi {
         }
         cacheKey.setCacheType(dataType.getTypeName());
         SerialCache serialCache = getSerialCache(cacheKey);
-        if (client.isDebug()) {
+        if (context.isDebug()) {
             LOGGER.info("Cache key:{},Exists:{}", serialCache.getKey(), serialCache.isExists());
         }
         if (serialCache.isExists()) {
@@ -108,7 +107,7 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public <T extends Serializable> List<CachePack<T>> getCachesByPattern(Class<T> dataType, String pattern, boolean skipPrefix) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         Iterable<String> keys = client.getKeys().getKeysByPattern(pattern);
         List<CachePack<T>> packs = new ArrayList<>();
         keys.forEach(key -> packs.add(getCache(dataType, key, skipPrefix)));
@@ -188,7 +187,7 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public SerialCache getSerialCache(CacheKey cacheKey) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         String key = createKey(cacheKey);
         SerialCache serialCache = new SerialCache(cacheKey.getKey(), cacheKey.isSkipPrefix());
         try {
@@ -197,7 +196,7 @@ public class RedisCacheImpl implements CacheApi {
                 cache.expire(cacheKey.getTimeToLive(), TimeUnit.MILLISECONDS);
             }
             serialCache.setExists(cache.isExists());
-            if (client.isDebug()) {
+            if (context.isDebug()) {
                 LOGGER.info("Get SerialCache key:[{}],Exists:{},RemainTimeToLive:{}", key, cache.isExists(), cache.remainTimeToLive());
             }
             if (cache.isExists()) {
@@ -217,14 +216,14 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public List<SerialCache> getSerialCache(CacheBatchKey cacheKey) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         List<SerialCache> batchDeleteResult = new ArrayList<>();
         List<String> keys = cacheKey.getBatchKey();
         BatchOptions options = BatchOptions.defaults()
                 .executionMode(BatchOptions.ExecutionMode.IN_MEMORY);
         RBatch batch = client.createBatch(options);
         for (String key : keys) {
-            String keyb = client.createKey(key, cacheKey.getCacheType(), cacheKey.isSkipPrefix());
+            String keyb = context.createKey(key, cacheKey.getCacheType(), cacheKey.isSkipPrefix());
             RBucketAsync<String> bucketAsync = batch.getBucket(keyb, StringCodec.INSTANCE);
             if (cacheKey.isRefreshTimeToLive()) {
                 bucketAsync.expireAsync(cacheKey.getTimeToLive(), TimeUnit.MILLISECONDS);
@@ -252,7 +251,7 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public SerialCache putSerialCache(SerialCache serialCache) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         String key = createKey(serialCache);
         try {
             RBucket<String> cache = client.getBucket(key, StringCodec.INSTANCE);
@@ -272,7 +271,7 @@ public class RedisCacheImpl implements CacheApi {
             serialCache.setExists(true);
             serialCache.setTimeToLiveRemain(cache.remainTimeToLive());
             serialCache.setTimeToLive(cache.remainTimeToLive());
-            if (client.isDebug()) {
+            if (context.isDebug()) {
                 LOGGER.info("Put SerialCache key:[{}],RemainTimeToLive:{}", key, serialCache.getTimeToLive());
             }
         } catch (Exception e) {
@@ -285,7 +284,7 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public BatchSimpleResult putSerialCache(List<SerialCache> batchCache) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         BatchSimpleResult batchDeleteResult = new BatchSimpleResult();
 
         BatchOptions options = BatchOptions.defaults()
@@ -333,9 +332,9 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public boolean deleteCache(CacheKey cacheKey) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         String key = createKey(cacheKey);
-        if (client.isDebug()) {
+        if (context.isDebug()) {
             LOGGER.info("Delete SerialCache key:{}", key);
         }
         RBucket<String> cache = client.getBucket(key, StringCodec.INSTANCE);
@@ -344,7 +343,7 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public BatchSimpleResult deleteCache(CacheBatchKey cacheKey) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         BatchSimpleResult batchDeleteResult = new BatchSimpleResult();
         List<String> keys = cacheKey.getBatchKey();
 
@@ -353,7 +352,7 @@ public class RedisCacheImpl implements CacheApi {
                 .skipResult();
         RBatch batch = client.createBatch(options);
         for (String key : keys) {
-            String keyb = client.createKey(key, cacheKey.getCacheType(), cacheKey.isSkipPrefix());
+            String keyb = context.createKey(key, cacheKey.getCacheType(), cacheKey.isSkipPrefix());
             batch.getBucket(keyb, StringCodec.INSTANCE).deleteAsync();
         }
         BatchResult res = batch.execute();
@@ -386,7 +385,7 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public long deleteCachesByPattern(String pattern, boolean skipPrefix) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         Iterable<String> keys = client.getKeys().getKeysByPattern(pattern);
         int i = 0;
         for (String key : keys) {
@@ -401,9 +400,9 @@ public class RedisCacheImpl implements CacheApi {
 
     @Override
     public boolean setExpire(CacheKey cacheKey) {
-        final RedissonClientInterface client = context.getClient();
+        final RedissonClient client = context.getClient();
         String key = createKey(cacheKey);
-        if (client.isDebug()) {
+        if (context.isDebug()) {
             LOGGER.info("Set Expire key:{},ttl:{}", key, cacheKey.getTimeToLive());
         }
         RBucket<String> cache = client.getBucket(key, StringCodec.INSTANCE);
@@ -411,7 +410,7 @@ public class RedisCacheImpl implements CacheApi {
     }
 
     private String createKey(CacheKey cachePack) {
-        final RedissonClientInterface client = context.getClient();
-        return client.createKey(cachePack.getKey(), cachePack.getCacheType(), cachePack.isSkipPrefix());
+        final RedissonClient client = context.getClient();
+        return context.createKey(cachePack.getKey(), cachePack.getCacheType(), cachePack.isSkipPrefix());
     }
 }

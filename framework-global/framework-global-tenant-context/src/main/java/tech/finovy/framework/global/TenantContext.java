@@ -23,7 +23,11 @@ public class TenantContext {
     }
 
     public static boolean isIgnoreTenant() {
-        return ignoreTenant.get();
+        final Boolean b = ignoreTenant.get();
+        if (b == null) {
+            return false;
+        }
+        return b;
     }
 
     public static void setCurrentTraceId(String traceId) {

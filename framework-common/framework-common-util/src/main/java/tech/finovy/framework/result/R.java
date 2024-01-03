@@ -1,6 +1,8 @@
 package tech.finovy.framework.result;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ObjectUtils;
 
@@ -10,6 +12,8 @@ import java.io.Serializable;
 import java.util.Optional;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class R<T> implements Serializable {
 
     @Serial

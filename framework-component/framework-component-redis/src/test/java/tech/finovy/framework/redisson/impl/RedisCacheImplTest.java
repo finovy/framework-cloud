@@ -13,7 +13,7 @@ import org.redisson.client.codec.Codec;
 import org.redisson.client.codec.StringCodec;
 import tech.finovy.framework.redis.entity.cache.entity.*;
 import tech.finovy.framework.redisson.config.RedissonConfiguration;
-import tech.finovy.framework.redisson.client.RedissonClientInterface;
+import tech.finovy.framework.redisson.holder.RedisContext;
 import tech.finovy.framework.redisson.holder.RedisContextHolder;
 
 import java.io.Serializable;
@@ -30,11 +30,13 @@ import static org.mockito.MockitoAnnotations.initMocks;
 class RedisCacheImplTest {
 
     @Mock
-    private RedissonClientInterface mockClient;
+    private RedissonClient mockClient;
     @Mock
     private RedissonConfiguration mockConfiguration;
 
     private RedisCacheImpl redisCacheImplUnderTest;
+
+    final RedisContext redisContext = RedisContextHolder.get();
 
     @BeforeEach
     void setUp() {
@@ -47,9 +49,9 @@ class RedisCacheImplTest {
     void testGetCache1() {
         final RedissonJsonBucket bucket = Mockito.mock(RedissonJsonBucket.class);
         when(bucket.isExists()).thenReturn(true);
-        when(mockClient.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
         when(mockClient.getBucket(anyString(), any(Codec.class))).thenReturn(bucket);
-        when(mockClient.isDebug()).thenReturn(true);
+        when(redisContext.isDebug()).thenReturn(true);
         // case 1: getCache normal
         final CachePack<Serializable> result = redisCacheImplUnderTest.getCache(Serializable.class, "key");
         Assertions.assertTrue(result.isExists());
@@ -73,7 +75,7 @@ class RedisCacheImplTest {
         when(batchResult.getResponses()).thenReturn(response);
 
         when(mockClient.createBatch(any(BatchOptions.class))).thenReturn(batch);
-        when(mockClient.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
         final CacheBatchPack<Serializable> result = redisCacheImplUnderTest.getCache(Serializable.class,
                 List.of("key"));
         Assertions.assertTrue(result.isExists());
@@ -87,9 +89,9 @@ class RedisCacheImplTest {
     void testGetCachesByPattern1() {
         RedissonJsonBucket bucket = Mockito.mock(RedissonJsonBucket.class);
         when(bucket.isExists()).thenReturn(true);
-        when(mockClient.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
         when(mockClient.getBucket(anyString(), any(Codec.class))).thenReturn(bucket);
-        when(mockClient.isDebug()).thenReturn(true);
+        when(redisContext.isDebug()).thenReturn(true);
         // Setup
         List<String> objects = new ArrayList<>();
         objects.add("A");
@@ -111,9 +113,9 @@ class RedisCacheImplTest {
         cachePack.setData("put cache test");
         RedissonJsonBucket bucket = Mockito.mock(RedissonJsonBucket.class);
         when(bucket.isExists()).thenReturn(true);
-        when(mockClient.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
         when(mockClient.getBucket(anyString(), any(Codec.class))).thenReturn(bucket);
-        when(mockClient.isDebug()).thenReturn(true);
+        when(redisContext.isDebug()).thenReturn(true);
         when(mockConfiguration.getKeyDefaultTtl()).thenReturn(0L);
         // Run the test
         final CachePack<String> result = redisCacheImplUnderTest.putCache(cachePack);
@@ -158,9 +160,9 @@ class RedisCacheImplTest {
         final BatchResult batchResult = mock(BatchResult.class);
         when(batch.getBucket(anyString(), any(StringCodec.class))).thenReturn(bucketAsync);
         when(mockClient.createBatch(any(BatchOptions.class))).thenReturn(batch);
-        when(mockClient.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
         when(mockClient.getBucket(anyString(), any(Codec.class))).thenReturn(bucket);
-        when(mockClient.isDebug()).thenReturn(true);
+        when(redisContext.isDebug()).thenReturn(true);
         when(mockConfiguration.getKeyDefaultTtl()).thenReturn(0L);
         List<Boolean> response = Lists.newArrayList(true);
         when(batch.execute()).thenReturn(batchResult);
@@ -197,8 +199,8 @@ class RedisCacheImplTest {
 
         final CacheKey cacheKey = new CacheKey("key", false, Object.class);
         when(mockClient.createBatch(any(BatchOptions.class))).thenReturn(batch);
-        when(mockClient.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
-        when(mockClient.isDebug()).thenReturn(true);
+        when(redisContext.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
+        when(redisContext.isDebug()).thenReturn(true);
         cacheKey.setRefreshTimeToLive(true);
         final SerialCache result = redisCacheImplUnderTest.getSerialCache(cacheKey);
         Assertions.assertTrue(result.isExists());
@@ -225,9 +227,9 @@ class RedisCacheImplTest {
         final BatchResult batchResult = mock(BatchResult.class);
         when(batch.getBucket(anyString(), any(StringCodec.class))).thenReturn(bucketAsync);
         when(mockClient.createBatch(any(BatchOptions.class))).thenReturn(batch);
-        when(mockClient.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
         when(mockClient.getBucket(anyString(), any(Codec.class))).thenReturn(bucket);
-        when(mockClient.isDebug()).thenReturn(true);
+        when(redisContext.isDebug()).thenReturn(true);
         when(mockConfiguration.getKeyDefaultTtl()).thenReturn(0L);
         List<Boolean> response = Lists.newArrayList(true);
         when(batch.execute()).thenReturn(batchResult);
@@ -261,8 +263,8 @@ class RedisCacheImplTest {
     void testDeleteCache1() {
         // Setup
         final CacheKey cacheKey = new CacheKey("key", false, Object.class);
-        when(mockClient.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
-        when(mockClient.isDebug()).thenReturn(true);
+        when(redisContext.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
+        when(redisContext.isDebug()).thenReturn(true);
         final RBucket bucket = mock(RBucket.class);
         final BatchResult batchResult = mock(BatchResult.class);
         final RBatch batch = mock(RBatch.class);
@@ -283,7 +285,7 @@ class RedisCacheImplTest {
         final BatchResult batchResult = mock(BatchResult.class);
         when(batch.getBucket(anyString(), any(StringCodec.class))).thenReturn(bucketAsync);
         when(mockClient.createBatch(any(BatchOptions.class))).thenReturn(batch);
-        when(mockClient.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), anyString(), anyBoolean())).thenReturn("key");
         List<Boolean> response = Lists.newArrayList(true);
         when(batch.execute()).thenReturn(batchResult);
         when(batchResult.getResponses()).thenReturn(response);
@@ -301,7 +303,7 @@ class RedisCacheImplTest {
         final BatchResult batchResult = mock(BatchResult.class);
         when(batch.getBucket(anyString(), any(StringCodec.class))).thenReturn(bucketAsync);
         when(mockClient.createBatch(any(BatchOptions.class))).thenReturn(batch);
-        when(mockClient.isDebug()).thenReturn(true);
+        when(redisContext.isDebug()).thenReturn(true);
 
         List<Boolean> response = Lists.newArrayList(true);
         when(batch.execute()).thenReturn(batchResult);
@@ -317,7 +319,7 @@ class RedisCacheImplTest {
         final RBucket bucket = mock(RBucket.class);
         when(mockClient.getBucket(anyString(), any(StringCodec.class))).thenReturn(bucket);
         when(bucket.delete()).thenReturn(true);
-        when(mockClient.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
+        when(redisContext.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
         // Run the test
         final long result = redisCacheImplUnderTest.deleteCachesByPattern("key");
         // Verify the results
@@ -329,8 +331,8 @@ class RedisCacheImplTest {
         // Setup
         final CacheKey cacheKey = new CacheKey("key", false, Object.class);
         cacheKey.setTimeToLive(100L);
-        when(mockClient.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
-        when(mockClient.isDebug()).thenReturn(true);
+        when(redisContext.createKey(anyString(), any(), anyBoolean())).thenReturn("key");
+        when(redisContext.isDebug()).thenReturn(true);
         final RBucket bucket = mock(RBucket.class);
         when(mockClient.getBucket(anyString(), any(StringCodec.class))).thenReturn(bucket);
         when(bucket.expire(100L, TimeUnit.MILLISECONDS)).thenReturn(true);

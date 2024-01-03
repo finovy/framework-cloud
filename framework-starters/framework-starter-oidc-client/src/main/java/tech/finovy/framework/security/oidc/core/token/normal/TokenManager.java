@@ -3,7 +3,14 @@ package tech.finovy.framework.security.oidc.core.token.normal;
 import org.springframework.security.core.userdetails.UserDetails;
 import tech.finovy.framework.security.oidc.common.CacheTypeEnum;
 
-public interface TokenStorage {
+public interface TokenManager {
+
+    /**
+     * generate token
+     * @param username username
+     * @return token
+     */
+    String generate(String username);
 
     /**
      * get info,if user not exist just return null
