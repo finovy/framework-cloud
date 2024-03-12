@@ -41,7 +41,7 @@
         <disruptor.version>3.4.4</disruptor.version>
         <dubbo.version>3.2.7</dubbo.version>
         <dubbo-dependencies.version>3.2.7</dubbo-dependencies.version>
-        <zookeeper.version>3.9.1</zookeeper.version>
+        <zookeeper.version>3.8.4</zookeeper.version>
         <elastic-job.version>3.0.3</elastic-job.version>
         <protobuf-java.version>3.25.3</protobuf-java.version>
         <fastjson.version>1.2.83</fastjson.version>
