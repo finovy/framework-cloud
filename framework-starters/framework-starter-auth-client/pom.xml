@@ -10,7 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>framework-starter-auth-client</artifactId>
-    <version>0.2.2-SNAPSHOT</version>
+    <version>0.2.0</version>
 
     <properties>
         <sonar.skip>true</sonar.skip>

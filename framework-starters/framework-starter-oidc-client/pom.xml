@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
     <artifactId>framework-starter-oidc-client</artifactId>
-    <version>0.2.2-SNAPSHOT</version>
+    <version>0.2.0</version>
 
     <properties>
         <sonar.skip>true</sonar.skip>
