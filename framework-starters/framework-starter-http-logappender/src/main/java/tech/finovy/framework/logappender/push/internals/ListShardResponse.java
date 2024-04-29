@@ -3,11 +3,13 @@ package tech.finovy.framework.logappender.push.internals;
 import tech.finovy.framework.logappender.entry.Response;
 import tech.finovy.framework.logappender.entry.Shard;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ListShardResponse extends Response {
+    @Serial
     private static final long serialVersionUID = -8483367329010665256L;
     protected List<Shard> mShards = null;
 

@@ -5,9 +5,6 @@ import tech.finovy.framework.logappender.entry.LogItem;
 
 import java.util.List;
 
-/**
- * @author dtype.huang
- */
 public abstract class AbstractLogSizeCalculator {
     private AbstractLogSizeCalculator() {
     }

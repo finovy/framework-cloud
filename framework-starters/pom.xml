@@ -10,14 +10,50 @@
     <artifactId>framework-starters</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
+
     <modules>
-        <module>framework-starter-nacos-entity</module>
         <module>framework-starter-nacos-config</module>
         <module>framework-starter-nacos-discovery</module>
         <module>framework-starter-healthcheck</module>
         <module>framework-starter-http-logappender</module>
+        <module>framework-starter-redis-redissonclient</module>
+        <module>framework-starter-elasticsearch-client</module>
+        <module>framework-starter-mongodb-client</module>
+        <module>framework-starter-rocketmq-consumer</module>
+        <module>framework-starter-rocketmq-producer</module>
+        <module>framework-starter-rabbitmq-client</module>
+        <module>framework-starter-http</module>
+        <module>framework-starter-oss-client</module>
+        <module>framework-starter-ratelimiter</module>
+        <module>framework-starter-event</module>
+        <module>framework-starter-disruptor</module>
+        <module>framework-starter-datasource-dynamic</module>
+        <module>framework-starter-oidc-client</module>
+        <module>framework-starter-local-cache</module>
+        <module>framework-starter-interceptor</module>
+        <module>framework-starter-seata</module>
+        <module>framework-starter-mybatis</module>
+        <module>framework-starter-environment</module>
+        <module>framework-starter-cloud</module>
+        <module>framework-starter-dubbo</module>
+        <module>framework-starter-sentinel</module>
+        <module>framework-starter-scheduler-client</module>
+        <module>framework-starter-springfox-adapter</module>
+        <module>framework-starter-transaction-client</module>
+        <module>framework-starter-skywalking</module>
     </modules>
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!--test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
@@ -54,28 +90,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>jacoco-initialize</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>jacoco-site</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

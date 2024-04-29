@@ -12,18 +12,15 @@
     <dependencies>
         <dependency>
             <groupId>tech.finovy</groupId>
-            <artifactId>framework-core-commons</artifactId>
-            <version>${revision}</version>
+            <artifactId>framework-common-core</artifactId>
         </dependency>
         <dependency>
             <groupId>tech.finovy</groupId>
-            <artifactId>framework-core-disruptor</artifactId>
-            <version>${revision}</version>
+            <artifactId>framework-component-disruptor</artifactId>
         </dependency>
         <dependency>
             <groupId>tech.finovy</groupId>
-            <artifactId>framework-starter-nacos-entity</artifactId>
-            <version>${revision}</version>
+            <artifactId>framework-component-nacos-entity</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

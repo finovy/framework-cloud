@@ -7,9 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.yaml.snakeyaml.Yaml;
 
-/**
- * @author dtype
- */
 @Slf4j
 public abstract class AbstractNacosConfigDefinitionListener<T> implements NacosConfigDefinitionListener<T> {
 

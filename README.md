@@ -1,16 +1,16 @@
-# Framework Cloud
+# Cloud Framework
 
 ------
 
-**English | [中文版](README_CN.md)**
+[中文版](README_CN.md) | 英文版
 
 ### Directory List
 
-  - [Project Introduction](#project-introduction)
-  - [Functional Features](#functional-features)
-  - [Operating Environment](#operating-environment)
-  - [Project Structure](#project-structure)
-  - [Quick Start](#quick-start)
+- [Project Introduction](#Project Introduction)
+- [Functional Features](#Functional Features)
+- [Operating Environment](#Operating Environment)
+- [Project Structure](#Project Structure)
+- [Quick Start](#Quick Start)
 
 ### Project Introduction
 
@@ -35,8 +35,8 @@ This project does not involve the development of business code, but rather provi
 ```tex
 framework-cloud
 ├─framework-core                                 : Core Code Layer
-│  ├─framework-core-commons                      : Common Dependencies
-│  ├─framework-core-disruptor                    : Disruptor Extension
+│  ├─framework-common-core                     : Common Dependencies
+│  ├─framework-component-disruptor                    : Disruptor Extension
 │  ├─framework-core-http                         : HTTP Extension
 │  ├─framework-local-cache                       : Local Cache
 │  ├─framework-core-redis                        : Redis Extension
@@ -58,7 +58,7 @@ framework-cloud
    <dependency>
        <groupId>tech.finovy</groupId>
        <artifactId>framework-dependencies</artifactId>
-       <version>0.1.0-SNAPSHOT</version>
+       <version>0.1.0</version>
    </dependency>
    ```
 
@@ -67,7 +67,7 @@ framework-cloud
    ```yaml
    <dependency>
        <groupId>tech.finovy</groupId>
-       <artifactId>framework-core-commons</artifactId>
+       <artifactId>framework-common-core</artifactId>
    </dependency>
    ```
 
