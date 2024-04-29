@@ -26,7 +26,7 @@ public class HttpTemplateServiceTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set(HttpHeaders.ACCEPT_ENCODING, MediaType.ALL_VALUE);
         HttpEntity httpEntity = new HttpEntity<>("{}", headers);
-        String api = "http://10.7.0.27:8848/nacos";
+        String api = "http://127.0.0.1:8848/nacos";
         HttpTemplatePack<RestTemplate> httpTemplatePack = httpTemplateService.choice(api);
         // code cover
         httpTemplatePack.setRestTemplate(restTemplate);
