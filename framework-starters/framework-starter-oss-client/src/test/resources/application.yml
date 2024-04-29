@@ -1,0 +1,52 @@
+logging:
+  config: classpath:logback-spring.xml
+
+spring:
+  application:
+    name: test
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    import:
+      - optional:nacos:${APPLICATION_NAME:test}.yaml
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_USERNAME:nacos}
+      config:
+        server-addr: ${NACOS_CONFIG_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_CONFIG_NAMESPACE:dev}
+        group-id: ${NACOS_CONFIG_GROUPID:DEFAULT_GROUP}
+        file-extension: yaml
+        maxRetry: 10
+      discovery:
+        server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:dev}
+        group-id: ${NACOS_DISCOVERY_GROUPID:DISCOVERY_GROUP}
+        enabled: true
+        register-enabled: true
+
+# test resource
+oss:
+  public-x509-pem: -----BEGIN PUBLIC KEY-----
+    MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDnMixE0JOFXJQQXLdUYXtr5fS8
+    U4W0uDmJJ4LbEvz2j1LbCQ+auf654x7Jpivg6oIBietRkwsykJvkOwq9Ug8OrEkQ
+    pMD7dXGYbCjvYLma5XK/ZxrRfEvgzQ5BsCWDudslYekQNZF4odo+HAmDFP+Z1gcC
+    Zr7p6CpNV6T7Uuq9zQIDAQAB
+    -----END PUBLIC KEY-----
+  private-pkcs8-pem: -----BEGIN PRIVATE KEY-----
+    MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOcyLETQk4VclBBc
+    t1Rhe2vl9LxThbS4OYkngtsS/PaPUtsJD5q5/rnjHsmmK+DqggGJ61GTCzKQm+Q7
+    Cr1SDw6sSRCkwPt1cZhsKO9guZrlcr9nGtF8S+DNDkGwJYO52yVh6RA1kXih2j4c
+    CYMU/5nWBwJmvunoKk1XpPtS6r3NAgMBAAECgYEAmj/aU0tJsWeUDdqeIjkrzFBP
+    Wbrr8Sgckwp+fsWLasEzCZphA91mOwVyTB2HFve/J2GqU/GkPedHax2NS8TM77tm
+    WIeJgP2xrv11oT3zf3AduDR+9Du4vrrRPrQc/AxBipvrVnXJH+QyZW/jTvuXanvH
+    3c4a3hWJQ05GBUCh5S0CQQD7xOC67iKjZ5E12qfW3IRxRmL2n0PZuxqk8KfUrvFO
+    /qzML/V4mdhDY5ZuJcP3NDal4JeEOHAm9sPktzB0fZODAkEA6xTJ7gP0Jj6TnVie
+    5+qOqRH7w5uXmIxSYBBiPB2Yk0L1q15Ubi0ZmJgHg68eZcbO/yq/Ip6Sn5fHBTze
+    q/aYbwJAX5F7MNnmIhrVHxkx7rhkOc9bD3yjN8nzMjr7qhsCFFdN5nAqAK59Tg9G
+    cec5/OM//zVCrnjx8YhoEbCL3xwv2wJBANnxSRCwe67lPweWfKQ4UpCuioIcAxy7
+    ozdKmThwm96TKp348z+98kgFUpokRYNIIOpyYAehigAJv8q8VxiIo2MCQAX6+4B1
+    FsIi/Svfh2+/AC1B194IQROXyy/8OknR/R1LP65XtFo5+VRbFv7FuxF4kn5R6VCz
+    EZwmB2/OnGtLHo8=
+    -----END PRIVATE KEY-----

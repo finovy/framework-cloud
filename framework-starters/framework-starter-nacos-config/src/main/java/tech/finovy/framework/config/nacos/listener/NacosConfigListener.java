@@ -3,15 +3,12 @@ package tech.finovy.framework.config.nacos.listener;
 import com.alibaba.nacos.api.common.Constants;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.common.utils.MD5Utils;
-import tech.finovy.framework.config.nacos.entity.NacosCas;
+import tech.finovy.framework.nacos.entity.NacosCas;
 
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * @author dtype.huang
- */
 public class NacosConfigListener<T> implements Listener {
     public static final String JSON_TYPE = "json";
     public static final String TEXT_TYPE = "text";

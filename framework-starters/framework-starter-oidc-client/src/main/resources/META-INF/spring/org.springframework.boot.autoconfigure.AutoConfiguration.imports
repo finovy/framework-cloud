@@ -1,0 +1,2 @@
+tech.finovy.framework.security.oidc.OidcClientAutoConfiguration
+tech.finovy.framework.security.oidc.JwtConfiguration

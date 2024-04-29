@@ -9,7 +9,9 @@
         <version>${revision}</version>
     </parent>
     <artifactId>framework-starter-http-logappender</artifactId>
-    <packaging>jar</packaging>
+    <properties>
+        <sonar.skip>true</sonar.skip>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>

@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: ci-core-cache
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_USERNAME:nacos}
+      config:
+        server-addr: ${NACOS_CONFIG_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_CONFIG_NAMESPACE:dev}
+        group-id: ${NACOS_CONFIG_GROUPID:DEFAULT_GROUP}
+        file-extension: yaml
+        maxRetry: 10
+      discovery:
+        server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:dev}
+        group-id: ${NACOS_DISCOVERY_GROUPID:DISCOVERY_GROUP}
+        enabled: true
+        register-enabled: true

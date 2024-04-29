@@ -1,8 +1,5 @@
 package tech.finovy.framework.logappender.exception;
 
-/**
- * @author dtype.huang
- */
 public class ClientException extends RuntimeException {
     private static final long serialVersionUID = -4731383529577750679L;
     private String errorMessage;

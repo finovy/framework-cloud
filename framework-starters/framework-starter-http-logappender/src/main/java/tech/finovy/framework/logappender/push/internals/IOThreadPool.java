@@ -6,9 +6,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author dtype.huang
- */
 public class IOThreadPool {
 
     private static final String IO_THREAD_SUFFIX_FORMAT = "-io-thread-%d";

@@ -14,9 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-/**
- * @author dtype.huang
- */
 public abstract class AbstractServiceClient {
 
     private static final int DEFAULT_MARK_LIMIT = 1024 * 4;
