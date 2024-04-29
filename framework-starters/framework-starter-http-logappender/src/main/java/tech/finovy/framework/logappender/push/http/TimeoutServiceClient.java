@@ -1,18 +1,23 @@
 package tech.finovy.framework.logappender.push.http;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tech.finovy.framework.logappender.conf.ClientConfiguration;
 import tech.finovy.framework.logappender.entry.ResponseMessage;
 import tech.finovy.framework.logappender.exception.ClientException;
 import tech.finovy.framework.logappender.exception.ErrorCodes;
 import tech.finovy.framework.logappender.exception.ExceptionFactory;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.protocol.HttpClientContext;
 
 import java.io.IOException;
 import java.util.concurrent.*;
 
 public class TimeoutServiceClient extends DefaultServiceClient {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TimeoutServiceClient.class);
+
     private final ThreadPoolExecutor executor;
 
     public TimeoutServiceClient(ClientConfiguration config) {
@@ -53,7 +58,8 @@ public class TimeoutServiceClient extends DefaultServiceClient {
             httpResponse = future.get(this.config.getRequestTimeout(), TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             httpRequest.abort();
-            throw new ClientException(e.getMessage(), e);
+            LOGGER.warn("sendRequestCore Interrupted {}", e.getMessage(), e);
+            Thread.currentThread().interrupt();
         } catch (ExecutionException e) {
             httpRequest.abort();
             throw ExceptionFactory.createNetworkException((IOException) e.getCause());

@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies-parent</artifactId>
-        <version>4.0.3</version>
+        <version>4.0.5</version>
         <relativePath/>
     </parent>
     <groupId>tech.finovy</groupId>
@@ -13,53 +13,91 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <properties>
-        <revision>0.1.0-SNAPSHOT</revision>
+        <revision>0.2.2-SNAPSHOT</revision>
         <java.version>18</java.version>
-        <cache-api.version>1.1.1</cache-api.version>
+        <sonar.skip>true</sonar.skip>
+        <!--util-->
+        <bcprov-ext-jdk15to18.version>1.75</bcprov-ext-jdk15to18.version>
+        <hutool.version>5.8.22</hutool.version>
+        <easyexcel.version>3.3.4</easyexcel.version>
+        <!--common-->
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-io.vsersion>2.11.0</commons-io.vsersion>
         <commons-lang3.vsersion>3.12.0</commons-lang3.vsersion>
         <commons-validator.version>1.7</commons-validator.version>
         <commons-codec.version>1.15</commons-codec.version>
-        <commons-compress.version>1.21</commons-compress.version>
+        <commons-compress.version>1.26.0</commons-compress.version>
         <commons-cli.version>1.5.0</commons-cli.version>
+        <aliyun-sdk-oss.version>3.12.0</aliyun-sdk-oss.version>
+        <transmittable-thread-local.version>2.12.6</transmittable-thread-local.version>
+        <perf4j.version>0.9.16</perf4j.version>
+        <jjwt.version>0.12.3</jjwt.version>
         <curator.version>5.1.0</curator.version>
         <caffeine.version>3.1.5</caffeine.version>
+        <cache-api.version>1.1.1</cache-api.version>
         <canal.version>1.1.5</canal.version>
         <disruptor.version>3.4.4</disruptor.version>
-        <elastic-job.version>3.1.0-SNAPSHOT</elastic-job.version>
-        <protobuf-java.version>3.11.0</protobuf-java.version>
-        <druid.version>1.2.16</druid.version>
+        <dubbo.version>3.2.11</dubbo.version>
+        <dubbo-dependencies.version>3.2.11</dubbo-dependencies.version>
+        <zookeeper.version>3.8.4</zookeeper.version>
+        <elastic-job.version>3.0.3</elastic-job.version>
+        <protobuf-java.version>3.25.3</protobuf-java.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <flatten-maven-plugin.version>1.4.0</flatten-maven-plugin.version>
-        <guava.version>30.1.1-jre</guava.version>
-        <hazelcast.version>5.3.1</hazelcast.version>
+        <guava.version>32.1.2-jre</guava.version>
+        <hazelcast.version>5.3.6</hazelcast.version>
         <hazelcast-hibernate5.version>2.2.1</hazelcast-hibernate5.version>
         <hazelcast-kubernetes.version>2.2.3</hazelcast-kubernetes.version>
-        <h2database.version>2.1.214</h2database.version>
+        <h2database.version>2.2.224</h2database.version>
         <sentinel.version>1.8.6</sentinel.version>
-        <io.grpc.version>1.54.1</io.grpc.version>
-        <io.seata.version>2.0.0-SNAPSHOT</io.seata.version>
+        <grpc.version>1.54.1</grpc.version>
         <annotation-api.version>1.3.2</annotation-api.version>
         <joda-time.version>2.9.9</joda-time.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <junit-jupiter.version>5.9.1</junit-jupiter.version>
         <junit-vintage-engine.version>5.9.1</junit-vintage-engine.version>
         <lz4.version>1.3.0</lz4.version>
-        <logback.version>1.4.6</logback.version>
-        <lombok.version>1.18.26</lombok.version>
-        <nacos.client.version>2.2.2</nacos.client.version>
+        <logback.version>1.4.14</logback.version>
+        <lombok.version>1.18.30</lombok.version>
         <netty.version>4.1.78.Final</netty.version>
         <rocketmq.version>5.0.0</rocketmq.version>
-        <redisson.version>3.20.1</redisson.version>
+        <redisson.version>3.25.2</redisson.version>
         <servlet-api.version>3.1.0</servlet-api.version>
         <slf4j-api.version>2.0.7</slf4j-api.version>
-        <seata.version>1.6.1</seata.version>
-        <spring.cloud.version>2022.0.2</spring.cloud.version>
-        <spring-boot.version>3.0.0</spring-boot.version>
-        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
-        <spring.context.support.version>1.0.11</spring.context.support.version>
         <unirest.version>3.14.2</unirest.version>
+        <io.grpc.version>1.54.1</io.grpc.version>
+        <!--spring-->
+        <spring-boot.version>3.1.5</spring-boot.version>
+        <spring.cloud.version>2022.0.4</spring.cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
+        <!--seata-->
+        <seata.version>2.0.0</seata.version>
+        <!--nacos-->
+        <nacos.client.version>2.3.2</nacos.client.version>
+        <!--apm-->
+        <skywalking.version>9.1.0</skywalking.version>
+        <!--db-->
+        <mysql-connector.version>8.0.33</mysql-connector.version>
+        <mybatis-spring.version>3.0.3</mybatis-spring.version>
+        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
+        <mybatis.version>3.5.14</mybatis.version>
+        <druid.version>1.2.20</druid.version>
+        <elasticsearch.version>7.17.14</elasticsearch.version>
+        <elasticsearch-client.version>7.15.0</elasticsearch-client.version>
+        <elasticsearch-high-level-client.version>7.17.19</elasticsearch-high-level-client.version>
+        <!--Swagger-->
+        <knife4j.version>4.3.0</knife4j.version>
+        <swagger.version>1.6.12</swagger.version>
+        <swagger.v3.version>2.2.8</swagger.v3.version>
+        <swagger-models.version>1.6.2</swagger-models.version>
+        <springfox-swagger2.version>3.0.0</springfox-swagger2.version>
+        <!---->
+        <feishu-open-api.version>2.0.20</feishu-open-api.version>
+        <jasypt.version>3.0.5</jasypt.version>
+        <jenkins-client.version>0.3.8</jenkins-client.version>
+        <!--Plugins-->
+        <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
+        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+        <maven-plugin-build-helper.version>3.2.0</maven-plugin-build-helper.version>
         <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
@@ -68,16 +106,416 @@
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-        <mybatis-spring.version>2.3.0</mybatis-spring.version>
-        <zookeeper.version>3.6.2</zookeeper.version>
-        <sonar.skip>true</sonar.skip>
-        <feishu-open-api.version>2.0.20</feishu-open-api.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <jasypt.version>3.0.5</jasypt.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--Custom-->
+            <!--common-->
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-common-compress</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-common-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-common-util</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!--component-->
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-datasource-dynamic</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-disruptor</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-elasticsearch</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-event</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-http</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-local-cache</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-ratelimter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-redis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-rocketmq</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!--component-api-->
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-datasource-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-datasource-manager-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-distributed-cache-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-distributed-event-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-distributed-id-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-distributed-lock-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-distributed-map-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-distributed-queue-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-elasticsearch-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-elasticsearch-higth-level-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-http-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-local-cache-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-security-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-token-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!--entity-->
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-nacos-entity</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-redis-entity</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-component-scheduler-entity</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!--global-->
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-global-constant</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-global-dubbo-tenant-filter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-global-exception</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-global-interceptor-app</artifactId>
+                <version>${revision}</version>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>tech.finovy</groupId>-->
+<!--                <artifactId>framework-global-interceptor-mybatis</artifactId>-->
+<!--                <version>${revision}</version>-->
+<!--            </dependency>-->
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-global-interceptor-tenant</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-global-tenant-context</artifactId>
+                <version>${revision}</version>
+            </dependency>
+           <!--starters-->
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-disruptor</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-elasticsearch-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-event</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-healthcheck</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-http</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-http-logappender</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-mongodb-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-nacos-config</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-nacos-discovery</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-oss-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-rabbitmq-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-ratelimiter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-redis-redissonclient</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-rocketmq-consumer</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-rocketmq-producer</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-sentinel-cloud</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-sentinel-dubbo</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-auth-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-oidc-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-interceptor-app</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-interceptor-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-interceptor-tenant</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-environment</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-cloud</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-dubbo</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-datasource-dynamic</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-scheduler-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-springfox-adapter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-transaction-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.finovy</groupId>
+                <artifactId>framework-starter-skywalking</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!--Others       -->
+            <!--skywalking-->
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-trace</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <!--util-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-crypto</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-http</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
             <dependency>
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
@@ -87,6 +525,11 @@
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons-beanutils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-ext-jdk15to18</artifactId>
+                <version>${bcprov-ext-jdk15to18.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-cli</groupId>
@@ -99,21 +542,6 @@
                 <version>${commons-io.vsersion}</version>
             </dependency>
             <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j-api.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.vsersion}</version>
@@ -122,6 +550,53 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-compress</artifactId>
                 <version>${commons-compress.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.jpountz.lz4</groupId>
+                <artifactId>lz4</artifactId>
+                <version>${lz4.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.perf4j</groupId>
+                <artifactId>perf4j</artifactId>
+                <version>${perf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!--json-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!--zk-->
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
@@ -140,24 +615,36 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
-                <artifactId>curator-test</artifactId>
-                <version>${curator.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
                 <version>${curator.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.zookeeper</groupId>
-                <artifactId>zookeeper</artifactId>
-                <version>${zookeeper.version}</version>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-test</artifactId>
+                <version>${curator.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!--log-->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
             </dependency>
             <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>${commons-codec.version}</version>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+            <!--database-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
@@ -165,30 +652,76 @@
                 <version>${h2database.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.konghq</groupId>
-                <artifactId>unirest-java</artifactId>
-                <version>${unirest.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.ben-manes.caffeine</groupId>
-                <artifactId>caffeine</artifactId>
-                <version>${caffeine.version}</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-autoconfigure</artifactId>
+                <version>${mybatis-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter-test</artifactId>
+                <version>${mybatis-spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!--canal-->
             <dependency>
                 <groupId>com.alibaba.otter</groupId>
                 <artifactId>canal.protocol</artifactId>
                 <version>${canal.version}</version>
             </dependency>
+            <!--http-->
+            <dependency>
+                <groupId>com.konghq</groupId>
+                <artifactId>unirest-java</artifactId>
+                <version>${unirest.version}</version>
+            </dependency>
+            <!--cache-->
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+            <!--protocol-->
             <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
                 <version>${protobuf-java.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-all</artifactId>
+                <version>${io.grpc.version}</version>
+            </dependency>
+            <!--nacos-->
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
@@ -204,9 +737,55 @@
                 <artifactId>nacos-common</artifactId>
                 <version>${nacos.client.version}</version>
             </dependency>
+            <!--limiter-->
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-apache-dubbo-adapter</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-transport-simple-http</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba.csp</groupId>
                 <artifactId>sentinel-core</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-datasource-nacos</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-cluster-server-default</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-cluster-client-default</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-annotation-aspectj</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-spring-webflux-adapter</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-spring-webmvc-adapter</artifactId>
                 <version>${sentinel.version}</version>
             </dependency>
             <dependency>
@@ -216,149 +795,132 @@
             </dependency>
             <dependency>
                 <groupId>com.alibaba.csp</groupId>
-                <artifactId>sentinel-datasource-nacos</artifactId>
+                <artifactId>sentinel-reactor-adapter</artifactId>
                 <version>${sentinel.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
+           <!--data structure-->
             <dependency>
                 <groupId>com.lmax</groupId>
                 <artifactId>disruptor</artifactId>
                 <version>${disruptor.version}</version>
             </dependency>
+            <!--transaction-->
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
-                <version>${io.seata.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-all</artifactId>
-                <version>${io.grpc.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-all</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-core</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-common</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-config-core</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-discovery-core</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-server</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-config-nacos</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-config-spring-cloud</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-discovery-nacos</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-discovery-custom</artifactId>
-                <version>${io.seata.version}</version>
+                <version>${seata.version}</version>
+            </dependency>
+            <!--redis-->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+            <!--elastic-job-->
+            <dependency>
+                <groupId>org.apache.shardingsphere.elasticjob</groupId>
+                <artifactId>elasticjob-error-handler-general</artifactId>
+                <version>${elastic-job.version}</version>
             </dependency>
             <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-disruptor</artifactId>
-                <version>${revision}</version>
+                <groupId>org.apache.shardingsphere.elasticjob</groupId>
+                <artifactId>elasticjob-lite-lifecycle</artifactId>
+                <version>${elastic-job.version}</version>
             </dependency>
             <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-http</artifactId>
-                <version>${revision}</version>
+                <groupId>org.apache.shardingsphere.elasticjob</groupId>
+                <artifactId>elasticjob-lite-core</artifactId>
+                <version>${elastic-job.version}</version>
+            </dependency>
+            <!--elasticSearch-->
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elasticsearch-client.version}</version>
             </dependency>
             <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-local-cache</artifactId>
-                <version>${revision}</version>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client-sniffer</artifactId>
+                <version>${elasticsearch-client.version}</version>
             </dependency>
             <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-redis</artifactId>
-                <version>${revision}</version>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch-client.version}</version>
             </dependency>
             <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-rocketmq-configuration</artifactId>
-                <version>${revision}</version>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch-high-level-client.version}</version>
+            </dependency>
+            <!--mq-->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>${rocketmq.version}</version>
             </dependency>
             <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-rocketmq-producer</artifactId>
-                <version>${revision}</version>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-acl</artifactId>
+                <version>${rocketmq.version}</version>
             </dependency>
-            <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-commons</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-healthcheck</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-http-logappender</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-nacos-config</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-nacos-discovery</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-nacos-entity</artifactId>
-                <version>${revision}</version>
-            </dependency>
+            <!--netty-->
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>${netty.version}</version>
             </dependency>
-            <dependency>
-                <groupId>net.jpountz.lz4</groupId>
-                <artifactId>lz4</artifactId>
-                <version>${lz4.version}</version>
-            </dependency>
+            <!--javax-->
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -374,16 +936,7 @@
                 <artifactId>javax.annotation-api</artifactId>
                 <version>${annotation-api.version}</version>
             </dependency>
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>${joda-time.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
+            <!--hazelcast-->
             <dependency>
                 <groupId>com.hazelcast</groupId>
                 <artifactId>hazelcast</artifactId>
@@ -454,6 +1007,112 @@
                 <artifactId>hazelcast-kubernetes</artifactId>
                 <version>${hazelcast-kubernetes.version}</version>
             </dependency>
+            <!--API-->
+            <dependency>
+                <groupId>com.larksuite.oapi</groupId>
+                <artifactId>oapi-sdk</artifactId>
+                <version>${feishu-open-api.version}</version>
+            </dependency>
+            <!--jenkins-->
+            <dependency>
+                <groupId>com.offbytwo.jenkins</groupId>
+                <artifactId>jenkins-client</artifactId>
+                <version>${jenkins-client.version}</version>
+            </dependency>
+            <!--dubbo-->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-metadata-report-zookeeper</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-metadata-report-nacos</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-registry-nacos</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo-dependencies.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-actuator</artifactId>
+                <version>${dubbo-dependencies.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <version>${dubbo-dependencies.version}</version>
+                <artifactId>dubbo-dependencies-bom</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-framework-bom</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-context</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!--oss-->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-sdk-oss.version}</version>
+            </dependency>
+            <!--thread-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
+            <!--swagger-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
+                <version>${swagger.v3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <!--test-->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
@@ -469,119 +1128,47 @@
                 <artifactId>junit-jupiter-params</artifactId>
                 <version>${junit-vintage-engine.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-client</artifactId>
-                <version>${rocketmq.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-acl</artifactId>
-                <version>${rocketmq.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson</artifactId>
-                <version>${redisson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis-spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-autoconfigure</artifactId>
-                <version>${mybatis-spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere.elasticjob</groupId>
-                <artifactId>elasticjob-error-handler-general</artifactId>
-                <version>${elastic-job.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere.elasticjob</groupId>
-                <artifactId>elasticjob-lite-lifecycle</artifactId>
-                <version>${elastic-job.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere.elasticjob</groupId>
-                <artifactId>elasticjob-lite-core</artifactId>
-                <version>${elastic-job.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter-test</artifactId>
-                <version>${mybatis-spring.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.larksuite.oapi</groupId>
-                <artifactId>oapi-sdk</artifactId>
-                <version>${feishu-open-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.ulisesbocchio</groupId>
-                <artifactId>jasypt-spring-boot-starter</artifactId>
-                <version>${jasypt.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!--The flatten-maven-plugin is used to simplify and flatten Maven POM files by removing or reducing redundant information.-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <configuration>
+                            <updatePomFile>true</updatePomFile>
+                            <flattenMode>bom</flattenMode>
+                            <pomElements>
+                                <parent>expand</parent>
+                                <properties>keep</properties>
+                                <repositories>remove</repositories>
+                                <profiles>remove</profiles>
+                                <pluginManagement>remove</pluginManagement>
+                            </pomElements>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>flatten-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <profiles>
-        <profile>
-            <id>coverage</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>prepare-agent</id>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>report</id>
-                                <goals>
-                                    <goal>report</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>local</id>
             <properties>
@@ -614,113 +1201,7 @@
             </properties>
         </profile>
     </profiles>
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco-maven-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>io.spring.javaformat</groupId>
-                    <artifactId>spring-javaformat-maven-plugin</artifactId>
-                    <version>${spring-javaformat.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>validate</phase>
-                            <configuration>
-                                <skip>true</skip>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <configuration>
-                    <useProjectReferences>false</useProjectReferences>
-                    <additionalConfig>
-                        <file>
-                            <name>.settings/org.eclipse.jdt.ui.prefs</name>
-                            <location>
-                                ${maven.multiModuleProjectDirectory}/eclipse/org.eclipse.jdt.ui.prefs
-                            </location>
-                        </file>
-                        <file>
-                            <name>.settings/org.eclipse.jdt.core.prefs</name>
-                            <location>
-                                ${maven.multiModuleProjectDirectory}/eclipse/org.eclipse.jdt.core.prefs
-                            </location>
-                        </file>
-                    </additionalConfig>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>${flatten-maven-plugin.version}</version>
-                <configuration>
-                    <updatePomFile>true</updatePomFile>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                    <!--                    <pomElements>-->
-                    <!--                        <scm>remove</scm>-->
-                    <!--                        <url>remove</url>-->
-                    <!--                        <description>remove</description>-->
-                    <!--                        <organization>remove</organization>-->
-                    <!--                        <developers>remove</developers>-->
-                    <!--                        <repositories>remove</repositories>-->
-                    <!--                        <dependencyManagement>keep</dependencyManagement>-->
-                    <!--                        <distributionManagement>keep</distributionManagement>-->
-                    <!--                    </pomElements>-->
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
@@ -731,4 +1212,5 @@
             <url>${repository-snapshots}</url>
         </snapshotRepository>
     </distributionManagement>
+
 </project>

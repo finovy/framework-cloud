@@ -1,7 +1,5 @@
 package tech.finovy.framework.config.nacos.manager;
 
-import tech.finovy.framework.core.common.chain.ChainSortUtil;
-import tech.finovy.framework.core.common.listener.ShardingEngineSchedulerRefreshListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -10,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import tech.finovy.framework.common.core.chain.ChainSortUtil;
+import tech.finovy.framework.common.core.listener.ShardingEngineSchedulerRefreshListener;
 
 import java.util.LinkedHashMap;
 import java.util.List;

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME:core-provider}
+dubbo:
+  scan:
+    base-packages: tech.finovy.framework
+  protocols:
+    dubbo:
+      name: dubbo
+      port: -1
+  registry:
+    address: nacos://${NACOS_DISCOVERY_SERVER_ADDR:127.0.0.1:8848}
+  provider:
+    group: ciGtroup
+  application:
+    version: ciGtroup
+logging:
+  config: classpath:logback-spring.xml
+

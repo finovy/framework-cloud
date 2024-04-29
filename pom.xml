@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-build</artifactId>
-        <version>4.0.4</version>
+        <groupId>tech.finovy</groupId>
+        <artifactId>framework-cloud-parent</artifactId>
+        <version>0.2.2-SNAPSHOT</version>
     </parent>
-    <groupId>tech.finovy</groupId>
     <artifactId>framework-cloud</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>framework-core</module>
         <module>framework-starters</module>
         <module>framework-dependencies</module>
+        <module>framework-global</module>
+        <module>framework-common</module>
+        <module>framework-component</module>
+        <module>framework-component-api</module>
+        <module>framework-component-entity</module>
+        <module>framework-coverage</module>
     </modules>
 
     <properties>
-        <revision>0.1.0-SNAPSHOT</revision>
-        <logback.version>1.4.6</logback.version>
-        <lombok.version>1.18.26</lombok.version>
-
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
-        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-        <flatten-maven-plugin.version>1.4.0</flatten-maven-plugin.version>
-        <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
-        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-        <native-maven-plugin.version>0.9.19</native-maven-plugin.version>
+        <revision>0.2.2-SNAPSHOT</revision>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -42,148 +34,67 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>${logback.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
         </dependency>
     </dependencies>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-dependencies</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco-maven-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>io.spring.javaformat</groupId>
-                    <artifactId>spring-javaformat-maven-plugin</artifactId>
-                    <version>${spring-javaformat.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>validate</phase>
-                            <configuration>
-                                <skip>true</skip>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <configuration>
-                    <useProjectReferences>false</useProjectReferences>
-                    <additionalConfig>
-                        <file>
-                            <name>.settings/org.eclipse.jdt.ui.prefs</name>
-                            <location>
-                                ${maven.multiModuleProjectDirectory}/eclipse/org.eclipse.jdt.ui.prefs
-                            </location>
-                        </file>
-                        <file>
-                            <name>.settings/org.eclipse.jdt.core.prefs</name>
-                            <location>
-                                ${maven.multiModuleProjectDirectory}/eclipse/org.eclipse.jdt.core.prefs
-                            </location>
-                        </file>
-                    </additionalConfig>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
+            <!--used to execute and manage unit tests in a Maven project.-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <inherited>true</inherited>
                 <configuration>
-                    <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <argLine>--add-opens java.base/java.lang=ALL-UNNAMED --add-opens
+                        java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED
+                        --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED --add-opens
+                        java.base/java.math=ALL-UNNAMED --add-exports java.base/sun.net.www=ALL-UNNAMED --add-opens
+                        java.base/java.net=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens
+                        java.base/java.security=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens
+                        java.base/java.time=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens
+                        java.base/jdk.internal.access=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED
+                        --add-opens java.base/jdk.internal.misc=ALL-UNNAMED
+                    </argLine>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>${flatten-maven-plugin.version}</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <updatePomFile>true</updatePomFile>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                        <configuration>
-                            <updatePomFile>true</updatePomFile>
-                            <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                            <pomElements>
-                                <scm>remove</scm>
-                                <url>remove</url>
-                                <description>remove</description>
-                                <organization>remove</organization>
-                                <developers>remove</developers>
-                                <repositories>remove</repositories>
-                            </pomElements>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--a Maven plugin that helps in flattening a multi-modules project's pom.xml files.-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.codehaus.mojo</groupId>-->
+            <!--                <artifactId>flatten-maven-plugin</artifactId>-->
+            <!--                <version>${flatten-maven-plugin.version}</version>-->
+            <!--                <inherited>true</inherited>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>flatten</id>-->
+            <!--                        <phase>process-resources</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>flatten</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <updatePomFile>true</updatePomFile>-->
+            <!--                            <flattenMode>resolveCiFriendliesOnly</flattenMode>-->
+            <!--                            <pomElements>-->
+            <!--                                <scm>remove</scm>-->
+            <!--                                <url>remove</url>-->
+            <!--                                <description>remove</description>-->
+            <!--                                <organization>remove</organization>-->
+            <!--                                <developers>remove</developers>-->
+            <!--                                <repositories>remove</repositories>-->
+            <!--                            </pomElements>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin.version}</version>
-            </plugin>
-        </plugins>
-    </reporting>
+
+
 </project>

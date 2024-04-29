@@ -8,9 +8,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * @author dtype.huang
- */
 public class LogItem implements Serializable {
     private static final long serialVersionUID = 4223669320701159704L;
     private long mLogTime;

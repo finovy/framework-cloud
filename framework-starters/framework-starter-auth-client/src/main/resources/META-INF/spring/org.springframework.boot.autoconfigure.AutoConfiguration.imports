@@ -1,0 +1,2 @@
+tech.finovy.framework.security.auth.AuthClientAutoConfiguration
+tech.finovy.framework.security.auth.JwtConfiguration

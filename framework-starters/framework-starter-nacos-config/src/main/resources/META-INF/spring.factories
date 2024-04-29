@@ -1,0 +1,6 @@
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+tech.finovy.framework.config.nacos.ShardingEngineNacosConfigBootstrapConfiguration
+org.springframework.context.ApplicationListener=\
+tech.finovy.framework.config.nacos.listener.ShardingEngineNacosLoggingListener
+org.springframework.boot.env.EnvironmentPostProcessor=\
+tech.finovy.framework.config.nacos.env.ShardingEngineEnvironmentPostProcessor

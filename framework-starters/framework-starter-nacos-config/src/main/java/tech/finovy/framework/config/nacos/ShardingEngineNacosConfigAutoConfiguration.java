@@ -1,13 +1,6 @@
 package tech.finovy.framework.config.nacos;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
-import tech.finovy.framework.config.nacos.context.ShardinEngineNacosContext;
-import tech.finovy.framework.config.nacos.listener.NacosConfigDefinitionListener;
-import tech.finovy.framework.config.nacos.listener.ShardingEngineInitApplicationListener;
-import tech.finovy.framework.core.disruptor.core.DisruptorEventConfiguration;
-import tech.finovy.framework.core.disruptor.provider.DefaultDisruptorEngineProvider;
-import tech.finovy.framework.core.disruptor.spi.DisruptorEngine;
-import tech.finovy.framework.core.disruptor.spi.ProcessInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -19,42 +12,48 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import tech.finovy.framework.config.nacos.context.ShardingEngineNacosContext;
+import tech.finovy.framework.config.nacos.listener.NacosConfigDefinitionListener;
+import tech.finovy.framework.config.nacos.listener.ShardingEngineInitApplicationListener;
+import tech.finovy.framework.disruptor.core.DisruptorEventConfiguration;
+import tech.finovy.framework.disruptor.provider.DefaultDisruptorEngineProvider;
+import tech.finovy.framework.disruptor.spi.DisruptorEngine;
+import tech.finovy.framework.disruptor.spi.ProcessInterface;
 
 import java.util.List;
 
 @Slf4j
 @Configuration(proxyBeanMethods = false)
-@ComponentScan(basePackages = {"tech.finovy.*"})
+@ComponentScan(basePackages = {"tech.finovy.framework.config.nacos.*"})
 @ConditionalOnProperty(name = "spring.cloud.nacos.config.enabled", matchIfMissing = true)
 @AutoConfigureAfter(NacosConfigDefinitionListener.class)
 public class ShardingEngineNacosConfigAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean(value = ShardinEngineNacosContext.class, search = SearchStrategy.CURRENT)
-    public ShardinEngineNacosContext shardinEngineNacosContext(ApplicationContext context, NacosConfigManager nacosConfigManager, List<NacosConfigDefinitionListener> listeners) {
-        if (context.getParent() != null && BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context.getParent(), ShardinEngineNacosContext.class).length > 0) {
-            return BeanFactoryUtils.beanOfTypeIncludingAncestors(context.getParent(), ShardinEngineNacosContext.class);
-        }
-        ShardinEngineNacosContext shardinEngineNacosContext = new ShardinEngineNacosContext(nacosConfigManager.getConfigService(), listeners);
-        return shardinEngineNacosContext;
+    @ConditionalOnMissingBean(value = ShardingEngineNacosContext.class, search = SearchStrategy.CURRENT)
+    public ShardingEngineNacosContext shardingEngineNacosContext(ApplicationContext context, NacosConfigManager nacosConfigManager, List<NacosConfigDefinitionListener> listeners) {
+//        if (context.getParent() != null && BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context.getParent(), ShardingEngineNacosContext.class).length > 0) {
+//            return BeanFactoryUtils.beanOfTypeIncludingAncestors(context.getParent(), ShardingEngineNacosContext.class);
+//        }
+        return new ShardingEngineNacosContext(nacosConfigManager.getConfigService(), listeners);
     }
 
     @Bean
     @ConditionalOnMissingBean(value = ShardingEngineInitApplicationListener.class, search = SearchStrategy.CURRENT)
     public ApplicationListener shardingEngineInitApplicationListener(ApplicationContext context) {
-        if (context.getParent() != null && BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context.getParent(), ShardingEngineInitApplicationListener.class).length > 0) {
-            return BeanFactoryUtils.beanOfTypeIncludingAncestors(context.getParent(), ShardingEngineInitApplicationListener.class);
-        }
+//        if (context.getParent() != null && BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context.getParent(), ShardingEngineInitApplicationListener.class).length > 0) {
+//            return BeanFactoryUtils.beanOfTypeIncludingAncestors(context.getParent(), ShardingEngineInitApplicationListener.class);
+//        }
         ShardingEngineInitApplicationListener shardingEngineInitApplicationListener = new ShardingEngineInitApplicationListener();
         return shardingEngineInitApplicationListener;
     }
 
     @Bean
     @ConditionalOnMissingBean(value = DisruptorEngine.class, search = SearchStrategy.CURRENT)
-    public DisruptorEngine disruptorEngine(ApplicationContext context, DisruptorEventConfiguration configuration,List<ProcessInterface> listeners) {
-        if (context.getParent() != null && BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context.getParent(), DisruptorEngine.class).length > 0) {
-            return BeanFactoryUtils.beanOfTypeIncludingAncestors(context.getParent(), DisruptorEngine.class);
-        }
+    public DisruptorEngine disruptorEngine(ApplicationContext context, DisruptorEventConfiguration configuration, List<ProcessInterface> listeners) {
+//        if (context.getParent() != null && BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context.getParent(), DisruptorEngine.class).length > 0) {
+//            return BeanFactoryUtils.beanOfTypeIncludingAncestors(context.getParent(), DisruptorEngine.class);
+//        }
         final DefaultDisruptorEngineProvider engineProvider = new DefaultDisruptorEngineProvider(configuration);
         // add extension
         engineProvider.addProcessInterfaces(listeners);

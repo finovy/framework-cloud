@@ -1,0 +1,7 @@
+include:
+  - project: 'p-common/gitlab-runner-docker'
+    ref: cicd
+    file: '.gitlab-ci-included-parallel.yml'
+
+variables:
+  extends: .variables_template
