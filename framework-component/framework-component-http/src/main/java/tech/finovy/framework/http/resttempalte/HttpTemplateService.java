@@ -13,9 +13,9 @@ public class HttpTemplateService<T> {
     }
 
 
-    public HttpTemplatePack<T> choice(String url) {
+    public HttpTemplatePack<T> choiceHttp(String url, boolean enableHttp) {
         HttpTemplatePack<T> pack = new HttpTemplatePack(loadbalanceRestTemplate);
-        if (properties.isEnableHttp()) {
+        if (enableHttp) {
             pack.setRestTemplate(restTemplate);
         }
         String host = url.toLowerCase();
@@ -31,6 +31,10 @@ public class HttpTemplateService<T> {
             return pack;
         }
         return pack;
+    }
+
+    public HttpTemplatePack<T> choice(String url) {
+        return choiceHttp(url, properties.isEnableHttp());
     }
 
 }
