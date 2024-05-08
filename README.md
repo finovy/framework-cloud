@@ -129,7 +129,7 @@ Serves as the parent dependency for projects, managing common component dependen
 <parent>
    <groupId>tech.finovy</groupId>
    <artifactId>framework-cloud-parent</artifactId>
-   <version>0.2.0</version>
+   <version>0.2.1</version>
 </parent>
 ```
 
@@ -653,7 +653,7 @@ nettyThreads: 0
     <artifactId>framework-starter-redis-redissionclient</artifactId>
 </dependency>
 ```
-Note: The RedissionsClientInterface is outdated and will be removed on 0.2.0. If you need to use it, switch to tech.finovy.framework.redisson.holder.RedisContextHolder is obtained, and the original enhanced functions are transferred to tech.finovy.framework.redisson.holder.RedisContext
+Note: The RedissionsClientInterface is outdated and will be removed on 0.2.1. If you need to use it, switch to tech.finovy.framework.redisson.holder.RedisContextHolder is obtained, and the original enhanced functions are transferred to tech.finovy.framework.redisson.holder.RedisContext
 
 ###### Code Usage:
 

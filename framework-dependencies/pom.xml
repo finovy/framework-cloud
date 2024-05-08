@@ -13,7 +13,7 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <properties>
-        <revision>0.2.2-SNAPSHOT</revision>
+        <revision>0.2.1</revision>
         <java.version>18</java.version>
         <sonar.skip>true</sonar.skip>
         <!--util-->

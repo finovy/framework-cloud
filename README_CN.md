@@ -131,7 +131,7 @@ framework-cloud
 <parent>
    <groupId>tech.finovy</groupId>
    <artifactId>framework-cloud-parent</artifactId>
-   <version>0.2.0</version>
+   <version>0.2.1</version>
 </parent>
 ```
 
@@ -669,7 +669,7 @@ nettyThreads: 0
    <artifactId>framework-starter-redis-redissionclient</artifactId>
 </dependency>
 ```
-备注: RedissonClientInterface 已经过时，将在0.2.0进行删除, 如需使用转用 tech.finovy.framework.redisson.holder.RedisContextHolder 获取,原有增强功能转到 tech.finovy.framework.redisson.holder.RedisContext
+备注: RedissonClientInterface 已经过时，将在0.2.1进行删除, 如需使用转用 tech.finovy.framework.redisson.holder.RedisContextHolder 获取,原有增强功能转到 tech.finovy.framework.redisson.holder.RedisContext
 
 ###### 代码使用:
 
