@@ -1,6 +1,6 @@
 package tech.finovy.framework.elasticsearch.api;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import tech.finovy.framework.elasticsearch.entity.BulkRequest;
 import tech.finovy.framework.elasticsearch.entity.DeleteRequest;
 import tech.finovy.framework.elasticsearch.entity.QueryRequest;

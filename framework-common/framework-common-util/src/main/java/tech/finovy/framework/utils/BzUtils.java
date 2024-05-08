@@ -1,9 +1,8 @@
 package tech.finovy.framework.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -168,8 +167,7 @@ public class BzUtils {
             JSONObject source = jsonObj.getJSONObject("_source");
             //转义符、大括号前后引号、json数组前后引号 过滤
             String sourceString = source.toJSONString().replace("\\", "").replace("\"{", "{").replace("}\"", "}").replace("\"[{\"", "[{\"").replace("\"}]\"", "\"}]");
-            JSON sourceparse = (JSON) JSON.parse(sourceString);
-            return JSONObject.toJavaObject(sourceparse, clazz);
+            return JSON.to(clazz, JSON.parse(sourceString));
         }).collect(Collectors.toList());
         pageData.setTotalCounts(total);
         pageData.setData(list);
@@ -187,8 +185,7 @@ public class BzUtils {
         JSONObject source = (JSONObject) jsonObject.get("_source");
         //转义符、大括号前后引号、json数组前后引号 过滤
         String sourceString = source.toJSONString().replace("\\", "").replace("\"{", "{").replace("}\"", "}").replace("\"[{\"", "[{\"").replace("\"}]\"", "\"}]");
-        JSON sourceparse = (JSON) JSON.parse(sourceString);
-        T ordersFlow = JSONObject.toJavaObject(sourceparse, clazz);
+        T ordersFlow = JSON.to(clazz, JSON.parse(sourceString));
         return (T) ordersFlow;
     }
 
@@ -260,7 +257,7 @@ public class BzUtils {
      * @return
      */
     public static String javaObjectToJson(Object clazz) {
-        return JSON.toJSONStringWithDateFormat(clazz, "yyyy-MM-dd HH:mm:ss", SerializerFeature.WriteDateUseDateFormat);
+        return JSON.toJSONString(clazz, "yyyy-MM-dd HH:mm:ss");
     }
 
     /**

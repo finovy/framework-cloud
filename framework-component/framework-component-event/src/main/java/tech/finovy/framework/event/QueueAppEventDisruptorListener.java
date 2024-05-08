@@ -1,8 +1,6 @@
 package tech.finovy.framework.event;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import lombok.extern.slf4j.Slf4j;
+import com.alibaba.fastjson2.JSON;
 import org.apache.commons.compress.compressors.CompressorException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -11,15 +9,12 @@ import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import tech.finovy.framework.common.core.RateLimiterFactory;
 import tech.finovy.framework.compress.CompressorFactory;
 import tech.finovy.framework.disruptor.core.event.DisruptorEvent;
 import tech.finovy.framework.disruptor.core.exception.DisruptorException;
 import tech.finovy.framework.disruptor.core.listener.AbstractDisruptorListener;
-import tech.finovy.framework.disruptor.spi.DisruptorEngine;
 import tech.finovy.framework.distributed.event.entity.EventMessage;
-import tech.finovy.framework.event.impl.EventServiceImpl;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -44,7 +39,7 @@ public class QueueAppEventDisruptorListener extends AbstractDisruptorListener {
     public void onEvent(DisruptorEvent event, int handlerId) {
         try {
             EventMessage eventMessage= (EventMessage) event.getEvent();
-            byte[] mqMessage=JSON.toJSONString(eventMessage.getBody(), SerializerFeature.WriteSlashAsSpecial).getBytes(StandardCharsets.UTF_8);
+            byte[] mqMessage=JSON.toJSONString(eventMessage.getBody()).getBytes(StandardCharsets.UTF_8);
             if(StringUtils.isNotBlank(eventMessage.getMessageQueueCompressor())){
                 mqMessage= CompressorFactory.compress(eventMessage.getMessageQueueCompressor(),mqMessage);
             }

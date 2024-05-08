@@ -25,7 +25,7 @@ import tech.finovy.framework.disruptor.core.DisruptorEventConfiguration;
 @ContextConfiguration
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
-@ImportAutoConfiguration({RefreshAutoConfiguration.class, ShardingEngineNacosConfigBootstrapConfiguration.class, NacosConfigAutoConfiguration.class, DisruptorEventConfiguration.class})
+@ImportAutoConfiguration({RefreshAutoConfiguration.class, ShardingEngineNacosConfigAutoConfiguration.class, NacosConfigAutoConfiguration.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = NacosAutoConfigurationTest.class)
 public class NacosAutoConfigurationTest {
 

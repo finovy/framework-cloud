@@ -1,6 +1,6 @@
 package tech.finovy.framework.logappender.entry;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;

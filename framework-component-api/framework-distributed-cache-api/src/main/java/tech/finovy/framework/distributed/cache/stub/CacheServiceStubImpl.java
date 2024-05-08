@@ -1,9 +1,8 @@
 package tech.finovy.framework.distributed.cache.stub;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import tech.finovy.framework.distributed.cache.api.CacheService;
+import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
+import tech.finovy.framework.distributed.cache.api.CacheService;
 import tech.finovy.framework.redis.entity.cache.entity.*;
 
 import java.io.Serializable;
@@ -124,7 +123,7 @@ public class CacheServiceStubImpl implements CacheService {
 
         }
         if (needToJson) {
-            String cacheStr = JSON.toJSONString(cacheData, SerializerFeature.WriteSlashAsSpecial);
+            String cacheStr = JSON.toJSONString(cacheData);
             serialCachePack.setCacheData(cacheStr);
         }
         serialCachePack.setTimeToLiveRemain(cachePack.getTimeToLiveRemain());
@@ -162,7 +161,7 @@ public class CacheServiceStubImpl implements CacheService {
                 needToJson = false;
             }
             if (needToJson) {
-                String cacheStr = JSON.toJSONString(cacheData, SerializerFeature.WriteSlashAsSpecial);
+                String cacheStr = JSON.toJSONString(cacheData);
                 serialCachePack.setCacheData(cacheStr);
             }
             listSerialCache.add(serialCachePack);

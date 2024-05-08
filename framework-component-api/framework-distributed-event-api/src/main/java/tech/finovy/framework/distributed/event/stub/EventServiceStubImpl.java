@@ -1,7 +1,6 @@
 package tech.finovy.framework.distributed.event.stub;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson2.JSON;
 import tech.finovy.framework.distributed.event.api.EventService;
 import tech.finovy.framework.distributed.event.entity.EventMessage;
 import tech.finovy.framework.distributed.event.entity.EventSerialMessage;
@@ -18,17 +17,17 @@ public class EventServiceStubImpl implements EventService {
     @Override
     public PushEventResult push(EventMessage queueMessage) {
         EventSerialMessage serialMessage=new EventSerialMessage();
-        String body=JSON.toJSONString(queueMessage.getBody(), SerializerFeature.WriteSlashAsSpecial);
+        String body=JSON.toJSONString(queueMessage.getBody());
         serialMessage.setBody(body);
         serialMessage.setTransactionId(queueMessage.getTransactionId());
         serialMessage.setTopic(queueMessage.getTopic());
         serialMessage.setTags(queueMessage.getTags());
-      return  queueService.pushSerial(serialMessage);
+        return  queueService.pushSerial(serialMessage);
     }
 
     @Override
     public PushEventResult pushSerial(EventSerialMessage queueSerialMessage) {
-       return queueService.pushSerial(queueSerialMessage);
+        return queueService.pushSerial(queueSerialMessage);
     }
 
     @Override

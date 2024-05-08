@@ -1,6 +1,6 @@
 package tech.finovy.framework.event.impl;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -84,7 +84,7 @@ public class EventServiceImpl implements EventService {
         }
         PushEventResult r=null;
         for(EventSerialMessage serialMessage:eventSerialMessage){
-           r= pushQueue(serialMessage);
+            r= pushQueue(serialMessage);
         }
         return r;
     }

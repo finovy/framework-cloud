@@ -1,7 +1,6 @@
 package tech.finovy.framework.redisson.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson2.JSON;
 import org.redisson.api.*;
 import org.redisson.client.codec.StringCodec;
 import org.slf4j.Logger;
@@ -142,7 +141,7 @@ public class RedisCacheImpl implements CacheApi {
             needToJson = false;
         }
         if (needToJson) {
-            String cacheStr = JSON.toJSONString(cacheData, SerializerFeature.WriteSlashAsSpecial);
+            String cacheStr = JSON.toJSONString(cacheData);
             serialCachePack.setCacheData(cacheStr);
         }
         serialCachePack = putSerialCache(serialCachePack);
@@ -178,7 +177,7 @@ public class RedisCacheImpl implements CacheApi {
                 needToJson = false;
             }
             if (needToJson) {
-                String cacheStr = JSON.toJSONString(cacheData, SerializerFeature.WriteSlashAsSpecial);
+                String cacheStr = JSON.toJSONString(cacheData);
                 serialCachePack.setCacheData(cacheStr);
             }
             listSerialCache.add(serialCachePack);

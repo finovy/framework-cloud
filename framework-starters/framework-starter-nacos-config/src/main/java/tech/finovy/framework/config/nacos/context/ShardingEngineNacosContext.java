@@ -1,6 +1,7 @@
 package tech.finovy.framework.config.nacos.context;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONWriter;
 import com.alibaba.nacos.api.common.Constants;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.ConfigType;
@@ -128,7 +129,7 @@ public class ShardingEngineNacosContext {
         String casMd5 = nacosCas == null ? null : nacosCas.getCasMd5();
         log.debug("Publish data-id: {},data-group: {}", dataId, dataGroup);
         if (StringUtils.endsWith(dataId, NacosConfigListener.JSON_TYPE)) {
-            return configService.publishConfigCas(dataId, dataGroup, JSON.toJSONString(config, true), casMd5, ConfigType.JSON.getType());
+            return configService.publishConfigCas(dataId, dataGroup, JSON.toJSONString(config, JSONWriter.Feature.PrettyFormat), casMd5, ConfigType.JSON.getType());
         }
         if (StringUtils.endsWith(dataId, NacosConfigListener.YAML_TYPE)) {
             Yaml yaml = new Yaml();
@@ -137,7 +138,7 @@ public class ShardingEngineNacosContext {
         if (StringUtils.endsWith(dataId, NacosConfigListener.TEXT_TYPE) || config instanceof String) {
             return configService.publishConfigCas(dataId, dataGroup, (String) config, casMd5, ConfigType.TEXT.getType());
         }
-        return configService.publishConfigCas(dataId, dataGroup, JSON.toJSONString(config, true), casMd5, ConfigType.JSON.getType());
+        return configService.publishConfigCas(dataId, dataGroup, JSON.toJSONString(config, JSONWriter.Feature.PrettyFormat), casMd5, ConfigType.JSON.getType());
     }
 
     public boolean removeConfig(String dataId, String group) throws NacosException {

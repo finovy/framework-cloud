@@ -30,7 +30,7 @@ import java.util.List;
 @ContextConfiguration
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
-@ImportAutoConfiguration({RefreshAutoConfiguration.class, ShardingEngineNacosConfigAutoConfiguration.class, NacosConfigAutoConfiguration.class, DisruptorEventConfiguration.class})
+@ImportAutoConfiguration({RefreshAutoConfiguration.class, ShardingEngineNacosConfigAutoConfiguration.class, NacosConfigAutoConfiguration.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = NacosConfigurationRepositoryTest.class)
 public class NacosConfigurationRepositoryTest {
 

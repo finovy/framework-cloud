@@ -46,15 +46,15 @@ public class ShardingEngineNacosConfigBootstrapConfiguration {
         return shardingEngineInitApplicationListener;
     }
 
-    @Bean
-    @ConditionalOnMissingBean(value = DisruptorEngine.class, search = SearchStrategy.CURRENT)
-    public DisruptorEngine disruptorEngine(ApplicationContext context, DisruptorEventConfiguration configuration, List<ProcessInterface> listeners) {
-//        if (context.getParent() != null && BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context.getParent(), DisruptorEngine.class).length > 0) {
-//            return BeanFactoryUtils.beanOfTypeIncludingAncestors(context.getParent(), DisruptorEngine.class);
-//        }
-        final DefaultDisruptorEngineProvider engineProvider = new DefaultDisruptorEngineProvider(configuration);
-        // add extension
-        engineProvider.addProcessInterfaces(listeners);
-        return engineProvider;
-    }
+//    @Bean Bootstrap上下文不使用内容刷新，由application上下文做
+//    @ConditionalOnMissingBean(value = DisruptorEngine.class, search = SearchStrategy.CURRENT)
+//    public DisruptorEngine disruptorEngine(ApplicationContext context, DisruptorEventConfiguration configuration, List<ProcessInterface> listeners) {
+////        if (context.getParent() != null && BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context.getParent(), DisruptorEngine.class).length > 0) {
+////            return BeanFactoryUtils.beanOfTypeIncludingAncestors(context.getParent(), DisruptorEngine.class);
+////        }
+//        final DefaultDisruptorEngineProvider engineProvider = new DefaultDisruptorEngineProvider(configuration);
+//        // add extension
+//        engineProvider.addProcessInterfaces(listeners);
+//        return engineProvider;
+//    }
 }

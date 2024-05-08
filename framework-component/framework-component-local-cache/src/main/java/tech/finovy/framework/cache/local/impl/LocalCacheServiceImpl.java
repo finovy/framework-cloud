@@ -15,8 +15,8 @@ public class LocalCacheServiceImpl implements LocalCacheService {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(BeanUtils.class);
 
-    private final String[] rep = new String[]{"tech.finovy.framework.", "tech.finovy.", "java.lang.", "com.alibaba.fastjson.", "java.util.", "::"};
-    private final String[] emptyString = new String[]{"", "", "", "", "", ""};
+    private final String[] rep = new String[]{"tech.finovy.framework.", "tech.finovy.", "java.lang.", "com.alibaba.fastjson.", "com.alibaba.fastjson2.", "java.util.", "::"};
+    private final String[] emptyString = new String[]{"", "", "", "", "", "", ""};
     private final Cache<String, LocalCachePack> localCacheCaffeine;
 
     public LocalCacheServiceImpl(Cache<String, LocalCachePack> localCacheCaffeine) {

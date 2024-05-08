@@ -1,6 +1,6 @@
 package tech.finovy.framework.global.interceptor;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -50,7 +50,7 @@ class TenantInterceptorTest {
         when(httpServletRequest.getHeader("app_id")).thenReturn("appID_123");
 
         final JSONObject bean = new JSONObject();
-        final Class<?> aClass = Class.forName("com.alibaba.fastjson.JSONObject");
+        final Class<?> aClass = Class.forName("com.alibaba.fastjson2.JSONObject");
         // Run the test
         final boolean resultA = abstractTenantInterceptorUnderTest.preHandle(httpServletRequest, null, new HandlerMethod(bean, aClass.getDeclaredMethods()[0]));
         // Verify the results

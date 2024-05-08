@@ -1,6 +1,6 @@
 package tech.finovy.framework.transaction.tcc.client.core;
 
-import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson2.TypeReference;
 import lombok.SneakyThrows;
 import tech.finovy.framework.transaction.tcc.client.api.TccClientService;
 import tech.finovy.framework.transaction.tcc.client.auth.SecurityContent;

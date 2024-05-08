@@ -1,7 +1,6 @@
 package tech.finovy.framework.rocketmq.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson2.JSON;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -37,7 +36,7 @@ public class QueueServiceImpl implements QueueService {
     @Override
     public PushResult push(QueueMessage queueMessage) {
         QueueSerialMessage serialMessage = new QueueSerialMessage();
-        String body = JSON.toJSONString(queueMessage.getBody(), SerializerFeature.WriteSlashAsSpecial);
+        String body = JSON.toJSONString(queueMessage.getBody());
         serialMessage.setBody(body);
         serialMessage.setTags(queueMessage.getTags());
         serialMessage.setTransactionId(queueMessage.getTransactionId());
@@ -50,7 +49,7 @@ public class QueueServiceImpl implements QueueService {
         List<QueueSerialMessage> batch = new ArrayList<>();
         for (QueueMessage ms : queueMessage) {
             QueueSerialMessage serialMessage = new QueueSerialMessage();
-            String body = JSON.toJSONString(ms.getBody(), SerializerFeature.WriteSlashAsSpecial);
+            String body = JSON.toJSONString(ms.getBody());
             serialMessage.setBody(body);
             serialMessage.setTags(ms.getTags());
             serialMessage.setTransactionId(ms.getTransactionId());

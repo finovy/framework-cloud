@@ -1,13 +1,12 @@
 package tech.finovy.framework.distributed.event.stub;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson2.JSON;
+import lombok.extern.slf4j.Slf4j;
 import tech.finovy.framework.distributed.event.EventConstant;
 import tech.finovy.framework.distributed.event.api.AsyncEventService;
 import tech.finovy.framework.distributed.event.entity.EventMessage;
 import tech.finovy.framework.distributed.event.entity.EventSerialMessage;
 import tech.finovy.framework.distributed.event.entity.PushEventResult;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.util.concurrent.CompletableFuture;
@@ -23,14 +22,14 @@ public class AsyncEventServiceStubImpl implements AsyncEventService {
     public CompletableFuture<PushEventResult> pushAsync(EventMessage<? extends Serializable> eventMessage) {
         try {
             EventSerialMessage serialMessage=new EventSerialMessage();
-            String body=JSON.toJSONString(eventMessage.getBody(), SerializerFeature.WriteSlashAsSpecial);
+            String body=JSON.toJSONString(eventMessage.getBody());
             serialMessage.setBody(body);
             serialMessage.setTransactionId(eventMessage.getTransactionId());
             serialMessage.setTopic(eventMessage.getTopic());
             serialMessage.setTags(eventMessage.getTags());
             return  asyncEventService.pushSerialAsync(serialMessage);
         } catch (Exception e) {
-           log.info(e.toString());
+            log.info(e.toString());
         }
         return CompletableFuture.supplyAsync(() -> {
             PushEventResult pushEventResult=new PushEventResult();

@@ -1,6 +1,7 @@
 package tech.finovy.framework.disruptor;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ public class DisruptorEventAutoConfiguration {
 
     @Bean
     @RefreshScope
+    @ConditionalOnMissingBean(value = DisruptorEventConfiguration.class)
     public DisruptorEventConfiguration disruptorEventConfiguration(Environment environment) {
         final String applicationName = environment.getProperty("spring.application.name");
         final DisruptorEventConfiguration configuration = Binder.get(environment)

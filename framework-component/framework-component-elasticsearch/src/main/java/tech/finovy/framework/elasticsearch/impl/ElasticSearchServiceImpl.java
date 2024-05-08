@@ -1,7 +1,7 @@
 package tech.finovy.framework.elasticsearch.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;
@@ -26,7 +26,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchServiceImpl.class);
 
 
-     private final ElasticSearchContext context =  ElasticSearchContextHolder.get();
+    private final ElasticSearchContext context =  ElasticSearchContextHolder.get();
 
 
     @Override

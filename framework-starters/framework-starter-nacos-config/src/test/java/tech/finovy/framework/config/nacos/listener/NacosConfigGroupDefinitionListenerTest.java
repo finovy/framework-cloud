@@ -1,6 +1,6 @@
 package tech.finovy.framework.config.nacos.listener;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tech.finovy.framework.config.nacos.listener.entity.TaskFlowEntity;
